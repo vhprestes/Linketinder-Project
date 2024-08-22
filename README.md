@@ -10,6 +10,10 @@ Aqui tive o objetivo inicial de cumprir os requisitos solicitados no MVP, depois
 Groovy Version: 4.0.22 JVM: 1.8.0_422 
 <br/>
 
+## Atenção
+[Para rodar a aplicação, é necessário instalar o groovy](https://groovy-lang.org/install.html)
+
+
 <br/>
 
 
