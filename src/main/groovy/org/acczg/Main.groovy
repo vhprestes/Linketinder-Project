@@ -30,14 +30,15 @@ static void main(String[] args) {
     empresas.add(empresa5)
 
 
-    println "Escolha uma opção: "
+    Boolean menuON = true
+
+while (menuON) {
     menu()
+    println "Escolha uma opção: "
     Integer option = System.in.newReader().readLine().toInteger()
-
-
     switch (option) {
         case 1:
-        listarCandidatos(candidatos)
+            listarCandidatos(candidatos)
             println "chamou candidato"
 //            println candidatos
             break
@@ -47,17 +48,18 @@ static void main(String[] args) {
             println empresas.toString()
             break
         case 3:
-//            cadastrarCandidatos()
+            cadastroCandidatos(candidatos)
             println "chamou cadastrar candidatos"
             break
         case 4:
 //            cadastrarEmpresas()
             println "chamou cadastro de empresas"
+            break
         case 0:
             println "Saindo do programa"
+            menuON = false
             break
-        default:
-            menu()
+    }
     }
 
 }
@@ -90,6 +92,10 @@ void listarEmpresas(List<PessoaJuridica> empresas) {
         println "---------------------------------"
 
     }
+}
+
+void cadastroCandidatos(candidatos) {
+
 }
 
 
