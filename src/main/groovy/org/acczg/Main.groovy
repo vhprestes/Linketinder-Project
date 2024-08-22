@@ -39,20 +39,15 @@ while (menuON) {
     switch (option) {
         case 1:
             listarCandidatos(candidatos)
-            println "chamou candidato"
-//            println candidatos
             break
         case 2:
             listarEmpresas(empresas)
-            println "chamou empresas"
             break
         case 3:
             cadastroCandidatos(candidatos)
-            println "chamou cadastrar candidatos"
             break
         case 4:
             cadastroEmpresas(empresas)
-            println "chamou cadastro de empresas"
             break
         case 0:
             println "Saindo do programa"
