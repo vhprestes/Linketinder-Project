@@ -77,6 +77,20 @@ void listarCandidatos(List<PessoaFisica> candidatos) {
     }
 }
 
+void listarEmpresas(List<PessoaJuridica> empresas) {
+    empresas.each { empresa ->
+        println "Nome: ${empresa.nome}"
+        println "Email: ${empresa.email}"
+        println "Descrição: ${empresa.descricao}"
+        println "CEP: ${empresa.CEP}"
+        println "Estado: ${empresa.estado}"
+        println "Competências: ${empresa.competencias}"
+        println "CNPJ: ${empresa.cnpj}"
+        println "País: ${empresa.pais}"
+        println "---------------------------------"
+
+    }
+}
 
 
 
