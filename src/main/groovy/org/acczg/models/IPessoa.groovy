@@ -7,4 +7,5 @@ interface IPessoa {
     String descricao
     String CEP
     String estado
+    List<String> competencias
 }
