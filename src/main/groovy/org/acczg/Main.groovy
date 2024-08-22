@@ -124,8 +124,7 @@ void cadastroCandidatos(candidatos) {
 }
 
 
-
-def menu() {
+void menu() {
     println "1. Listar Candidatos"
     println "2. Listar Empresas"
     println "3. Cadastrar Candidatos"
