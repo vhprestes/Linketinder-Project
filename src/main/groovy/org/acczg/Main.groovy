@@ -1,8 +1,10 @@
 package org.acczg
 
 import org.acczg.entities.PessoaFisica
+import org.acczg.entities.PessoaJuridica
 
 static void main(String[] args) {
+
 
     List<PessoaFisica> candidatos = []
     PessoaFisica pessoaFisica = new PessoaFisica(nome:"João", email:"joao@email.com", descricao:"Desenvolvedor", CEP:"16600000", estado:"SP", competencias:["Java", "Groovy"], cpf:"12345678900", idade:30)
@@ -16,11 +18,22 @@ static void main(String[] args) {
     PessoaFisica pessoaFisica5 = new PessoaFisica(nome:"Leandro", email:"leleco@email.com", descricao:"Desenvolvedor", CEP:"56600000", estado:"RJ", competencias:["Unity", "C++"], cpf:"33445566778", idade:29)
     candidatos.add(pessoaFisica5)
     List<String> empresas = []
+    PessoaJuridica empresa = new PessoaJuridica(nome:"Empresa 1", email:"empresa@empresa.com", descricao:"Empresa de TI", CEP:"16600000", estado:"SP", competencias:["Java", "Groovy"], cnpj:"12345678900", pais:"Brasil")
+    empresas.add(empresa as String)
+    PessoaJuridica empresa2 = new PessoaJuridica(nome:"Supresa", email:"supresa@rh.com", descricao:"Empresa de RH", CEP:"54321000", estado:"RJ", competencias:["SCRUM", "KANBAN"], cnpj:"09876543211", pais:"Brasil")
+    empresas.add(empresa2)
+    PessoaJuridica empresa3 = new PessoaJuridica(nome:"Nopresa", email:"nopresa@travels.com", descricao:"Empresa de Turismo", CEP:"26600000", estado:"RJ", competencias:["Java", "Groovy"], cnpj:"11223344556", pais:"Brasil")
+    empresas.add(empresa3)
+    PessoaJuridica empresa4 = new PessoaJuridica(nome:"Cobresa", email:"cobresa@steel.com", descricao:"Empresa de Metalurgia", CEP:"46600000", estado:"RJ", competencias:["Java", "Ruby"], cnpj:"22334455667", pais:"Brasil")
+    empresas.add(empresa4)
+    PessoaJuridica empresa5 = new PessoaJuridica(nome:"Lopresa", email:"lopresa@tech.com", descricao:"Empresa de TI", CEP:"56600000", estado:"RJ", competencias:["Python", "Unity"], cnpj:"33445566778", pais:"Brasil")
+    empresas.add(empresa5)
 
 
     println "Escolha uma opção: "
     menu()
     Integer option = System.in.newReader().readLine().toInteger()
+
 
     switch (option) {
         case 1:
@@ -29,8 +42,8 @@ static void main(String[] args) {
 //            println candidatos
             break
         case 2:
-//        listarEmpresas(empresas)
             println "chamou empresas"
+            println empresas.toString()
             break
         case 3:
 //            cadastrarCandidatos()
@@ -47,6 +60,9 @@ static void main(String[] args) {
     }
 
 }
+
+
+
 
 
 def menu() {
