@@ -37,7 +37,7 @@ static void main(String[] args) {
 
     switch (option) {
         case 1:
-//        listarCandidatos(candidatos)
+        listarCandidatos(candidatos)
             println "chamou candidato"
 //            println candidatos
             break
@@ -62,6 +62,19 @@ static void main(String[] args) {
 }
 
 
+void listarCandidatos(List<PessoaFisica> candidatos) {
+    candidatos.each { candidato ->
+        println "Nome: ${candidato.nome}"
+        println "Email: ${candidato.email}"
+        println "Descrição: ${candidato.descricao}"
+        println "CEP: ${candidato.CEP}"
+        println "Estado: ${candidato.estado}"
+        println "Competências: ${candidato.competencias}"
+        println "CPF: ${candidato.cpf}"
+        println "Idade: ${candidato.idade}"
+        println "---------------------------------"
+    }
+}
 
 
 
