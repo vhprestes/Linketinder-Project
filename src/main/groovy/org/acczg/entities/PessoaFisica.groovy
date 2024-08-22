@@ -1,4 +1,6 @@
 package org.acczg.entities
 
-class PessoaFisica {
+class PessoaFisica extends Pessoa{
+    String cpf
+    int idade
 }
