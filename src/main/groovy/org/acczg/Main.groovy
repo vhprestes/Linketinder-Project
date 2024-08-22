@@ -2,6 +2,8 @@ package org.acczg
 
 import org.acczg.entities.PessoaFisica
 import org.acczg.entities.PessoaJuridica
+import org.acczg.utils.CandidatoUtils
+import org.acczg.utils.EmpresaUtils
 
 static void main(String[] args) {
 
@@ -38,16 +40,16 @@ while (menuON) {
     Integer option = System.in.newReader().readLine().toInteger()
     switch (option) {
         case 1:
-            listarCandidatos(candidatos)
+            CandidatoUtils.listarCandidatos(candidatos)
             break
         case 2:
-            listarEmpresas(empresas)
+            EmpresaUtils.listarEmpresas(empresas)
             break
         case 3:
-            cadastroCandidatos(candidatos)
+            CandidatoUtils.cadastroCandidatos(candidatos)
             break
         case 4:
-            cadastroEmpresas(empresas)
+            EmpresaUtils.cadastroEmpresas(empresas)
             break
         case 0:
             println "Saindo do programa"
@@ -57,95 +59,6 @@ while (menuON) {
     }
 
 }
-
-
-void listarCandidatos(List<PessoaFisica> candidatos) {
-    candidatos.each { candidato ->
-        println "Nome: ${candidato.nome}"
-        println "Email: ${candidato.email}"
-        println "Descrição: ${candidato.descricao}"
-        println "CEP: ${candidato.CEP}"
-        println "Estado: ${candidato.estado}"
-        println "Competências: ${candidato.competencias}"
-        println "CPF: ${candidato.cpf}"
-        println "Idade: ${candidato.idade}"
-        println "---------------------------------"
-    }
-}
-
-void listarEmpresas(List<PessoaJuridica> empresas) {
-    empresas.each { empresa ->
-        println "Nome: ${empresa.nome}"
-        println "Email: ${empresa.email}"
-        println "Descrição: ${empresa.descricao}"
-        println "CEP: ${empresa.CEP}"
-        println "Estado: ${empresa.estado}"
-        println "Competências: ${empresa.competencias}"
-        println "CNPJ: ${empresa.cnpj}"
-        println "País: ${empresa.pais}"
-        println "---------------------------------"
-
-    }
-}
-
-void cadastroCandidatos(candidatos) {
-    println "Digite o nome do candidato: "
-    String nome = System.in.newReader().readLine()
-    println "Digite o email do candidato: "
-    String email = System.in.newReader().readLine()
-    println "Digite a descrição do candidato: "
-    String descricao = System.in.newReader().readLine()
-    println "Digite o CEP do candidato: "
-    String CEP = System.in.newReader().readLine()
-    println "Digite o estado do candidato: "
-    String estado = System.in.newReader().readLine()
-    println "Digite as competências do candidato, separadas por virgula: "
-    List<String> competencias = System.in.newReader().readLine().split(",")
-    println "Digite o CPF do candidato: "
-    String cpf = System.in.newReader().readLine()
-    println "Digite a idade do candidato: "
-    Integer idade = System.in.newReader().readLine().toInteger()
-
-    PessoaFisica candidato = new PessoaFisica(nome:nome, email:email, descricao:descricao, CEP:CEP, estado:estado, competencias:competencias, cpf:cpf, idade:idade)
-    candidatos.add(candidato)
-    println "Deseja cadastrar outro candidato? (S/N)"
-    String resposta = System.in.newReader().readLine()
-    if (resposta == "S") {
-        cadastroCandidatos(candidatos)
-    } else {
-        println "Candidato cadastrado com sucesso! Voltando ao menu principal..."
-    }
-}
-
-void cadastroEmpresas(empresas) {
-    println "Digite o nome da empresa: "
-    String nome = System.in.newReader().readLine()
-    println "Digite o email da empresa: "
-    String email = System.in.newReader().readLine()
-    println "Digite a descrição da empresa: "
-    String descricao = System.in.newReader().readLine()
-    println "Digite o CEP da empresa: "
-    String CEP = System.in.newReader().readLine()
-    println "Digite o estado da empresa: "
-    String estado = System.in.newReader().readLine()
-    println "Digite as competências da empresa, separadas por virgula: "
-    List<String> competencias = System.in.newReader().readLine().split(",")
-    println "Digite o CNPJ da empresa: "
-    String cnpj = System.in.newReader().readLine()
-    println "Digite o país da empresa: "
-    String pais = System.in.newReader().readLine()
-
-    PessoaJuridica empresa = new PessoaJuridica(nome:nome, email:email, descricao:descricao, CEP:CEP, estado:estado, competencias:competencias, cnpj:cnpj, pais:pais)
-    empresas.add(empresa)
-    println "Deseja cadastrar outra empresa? (S/N)"
-    String resposta = System.in.newReader().readLine()
-    if (resposta == "S") {
-        cadastroEmpresas(empresas)
-    } else {
-        println "Empresa cadastrada com sucesso! Voltando ao menu principal..."
-    }
-}
-
 
 void menu() {
     println "1. Listar Candidatos"
