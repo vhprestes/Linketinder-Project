@@ -19,7 +19,7 @@ static void main(String[] args) {
     candidatos.add(pessoaFisica5)
     List<String> empresas = []
     PessoaJuridica empresa = new PessoaJuridica(nome:"Empresa 1", email:"empresa@empresa.com", descricao:"Empresa de TI", CEP:"16600000", estado:"SP", competencias:["Java", "Groovy"], cnpj:"12345678900", pais:"Brasil")
-    empresas.add(empresa as String)
+    empresas.add(empresa)
     PessoaJuridica empresa2 = new PessoaJuridica(nome:"Supresa", email:"supresa@rh.com", descricao:"Empresa de RH", CEP:"54321000", estado:"RJ", competencias:["SCRUM", "KANBAN"], cnpj:"09876543211", pais:"Brasil")
     empresas.add(empresa2)
     PessoaJuridica empresa3 = new PessoaJuridica(nome:"Nopresa", email:"nopresa@travels.com", descricao:"Empresa de Turismo", CEP:"26600000", estado:"RJ", competencias:["Java", "Groovy"], cnpj:"11223344556", pais:"Brasil")
@@ -42,6 +42,7 @@ static void main(String[] args) {
 //            println candidatos
             break
         case 2:
+            listarEmpresas(empresas)
             println "chamou empresas"
             println empresas.toString()
             break
@@ -75,6 +76,7 @@ void listarCandidatos(List<PessoaFisica> candidatos) {
         println "---------------------------------"
     }
 }
+
 
 
 
