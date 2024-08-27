@@ -18,7 +18,7 @@ class CandidatoUtils {
         }
     }
 
-    static void cadastroCandidatos(List<PessoaFisica> candidatos) {
+    static PessoaFisica getInputs() {
         println "Digite o nome do candidato: "
         String nome = System.in.newReader().readLine()
         println "Digite o email do candidato: "
@@ -30,20 +30,31 @@ class CandidatoUtils {
         println "Digite o estado do candidato: "
         String estado = System.in.newReader().readLine()
         println "Digite as competências do candidato, separadas por virgula: "
-        List<String> competencias = System.in.newReader().readLine().split(",")
+        String competenciasInput = System.in.newReader().readLine()
+        List<String> competencias = competenciasInput ? competenciasInput.split(",") : []
         println "Digite o CPF do candidato: "
         String cpf = System.in.newReader().readLine()
         println "Digite a idade do candidato: "
-        Integer idade = System.in.newReader().readLine().toInteger()
+        String idadeInput = System.in.newReader().readLine()
+        Integer idade = idadeInput ? idadeInput.toInteger() : 0
+        PessoaFisica candidato = new PessoaFisica(nome: nome, email: email, descricao: descricao, CEP: CEP, estado: estado, competencias: competencias, cpf: cpf, idade: idade)
+        return candidato
+    }
 
-        PessoaFisica candidato = new PessoaFisica(nome:nome, email:email, descricao:descricao, CEP:CEP, estado:estado, competencias:competencias, cpf:cpf, idade:idade)
-        candidatos.add(candidato)
-        println "Deseja cadastrar outro candidato? (S/N)"
-        String resposta = System.in.newReader().readLine()
-        if (resposta == "S") {
-            cadastroCandidatos(candidatos)
-        } else {
-            println "Candidato cadastrado com sucesso! Voltando ao menu principal..."
+    static void cadastroCandidatos(List<PessoaFisica> candidatos) {
+        boolean cadastrarOutro = true
+        while (cadastrarOutro) {
+            PessoaFisica candidato = getInputs()
+            addCandidato(candidatos, candidato)
+            println "Deseja cadastrar outro candidato? (S/N)"
+            String resposta = System.in.newReader().readLine()
+            cadastrarOutro = resposta.toUpperCase() == "S"
         }
+        println "Candidato(s) cadastrado(s) com sucesso! Voltando ao menu principal..."
+    }
+
+    static void addCandidato(List<PessoaFisica> candidatos, PessoaFisica candidato) {
+        candidatos.add(candidato)
     }
 }
+
