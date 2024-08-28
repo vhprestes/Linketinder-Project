@@ -3,6 +3,7 @@
 
 Esse é um projeto do programa Acelera ZG 6.0, aonde foi necessário criar um MVP do Linketinder em groovy.
 Aqui tive o objetivo inicial de cumprir os requisitos solicitados no MVP, depois o código foi refatorado para melhorar legibilidade e manutenção.
+Feito por Victor Hugo S P Martins
 <br/>
 
 
