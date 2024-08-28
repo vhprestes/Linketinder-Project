@@ -19,31 +19,31 @@ class EmpresaUtils {
     }
 
     static void cadastroEmpresas(List<PessoaJuridica> empresas) {
+        try {
+        def scanner = new Scanner(System.in)
         println "Digite o nome da empresa: "
-        String nome = System.in.newReader().readLine()
+        String nome = scanner.nextLine()
         println "Digite o email da empresa: "
-        String email = System.in.newReader().readLine()
+        String email = scanner.nextLine()
         println "Digite a descrição da empresa: "
-        String descricao = System.in.newReader().readLine()
+        String descricao = scanner.nextLine()
         println "Digite o CEP da empresa: "
-        String CEP = System.in.newReader().readLine()
+        String CEP = scanner.nextLine()
         println "Digite o estado da empresa: "
-        String estado = System.in.newReader().readLine()
+        String estado = scanner.nextLine()
         println "Digite as competências da empresa, separadas por virgula: "
-        List<String> competencias = System.in.newReader().readLine().split(",")
+        String competenciasInput = scanner.nextLine()
+        List<String> competencias = competenciasInput ? competenciasInput.split(",") : []
         println "Digite o CNPJ da empresa: "
-        String cnpj = System.in.newReader().readLine()
+        String cnpj = scanner.nextLine()
         println "Digite o país da empresa: "
-        String pais = System.in.newReader().readLine()
+        String pais = scanner.nextLine()
 
         PessoaJuridica empresa = new PessoaJuridica(nome:nome, email:email, descricao:descricao, CEP:CEP, estado:estado, competencias:competencias, cnpj:cnpj, pais:pais)
         empresas.add(empresa)
-        println "Deseja cadastrar outra empresa? (S/N)"
-        String resposta = System.in.newReader().readLine()
-        if (resposta == "S") {
-            cadastroEmpresas(empresas)
-        } else {
-            println "Empresa cadastrada com sucesso! Voltando ao menu principal..."
+        println "Empresa cadastrada com sucesso! Voltando ao menu principal..."
+        } catch (Exception e) {
+            println "Erro ao cadastrar empresa: ${e.message}"
         }
     }
 }

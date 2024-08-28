@@ -42,7 +42,7 @@ while (menuON) {
         case 1:
             CandidatoUtils.listarCandidatos(candidatos)
             break
-        case 2:
+        case 2:3
             EmpresaUtils.listarEmpresas(empresas)
             break
         case 3:

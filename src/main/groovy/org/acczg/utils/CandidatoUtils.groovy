@@ -18,32 +18,42 @@ class CandidatoUtils {
         }
     }
 
-    static void cadastroCandidatos(List<PessoaFisica> candidatos) {
+    static PessoaFisica getInputs() {
+        try {
+        def scanner = new Scanner(System.in)
         println "Digite o nome do candidato: "
-        String nome = System.in.newReader().readLine()
+        String nome = scanner.nextLine()
         println "Digite o email do candidato: "
-        String email = System.in.newReader().readLine()
+        String email = scanner.nextLine()
         println "Digite a descrição do candidato: "
-        String descricao = System.in.newReader().readLine()
+        String descricao = scanner.nextLine()
         println "Digite o CEP do candidato: "
-        String CEP = System.in.newReader().readLine()
+        String CEP = scanner.nextLine()
         println "Digite o estado do candidato: "
-        String estado = System.in.newReader().readLine()
+        String estado = scanner.nextLine()
         println "Digite as competências do candidato, separadas por virgula: "
-        List<String> competencias = System.in.newReader().readLine().split(",")
+        String competenciasInput = scanner.nextLine()
+        List<String> competencias = competenciasInput ? competenciasInput.split(",") : []
         println "Digite o CPF do candidato: "
-        String cpf = System.in.newReader().readLine()
+        String cpf = scanner.nextLine()
         println "Digite a idade do candidato: "
-        Integer idade = System.in.newReader().readLine().toInteger()
-
-        PessoaFisica candidato = new PessoaFisica(nome:nome, email:email, descricao:descricao, CEP:CEP, estado:estado, competencias:competencias, cpf:cpf, idade:idade)
-        candidatos.add(candidato)
-        println "Deseja cadastrar outro candidato? (S/N)"
-        String resposta = System.in.newReader().readLine()
-        if (resposta == "S") {
-            cadastroCandidatos(candidatos)
-        } else {
-            println "Candidato cadastrado com sucesso! Voltando ao menu principal..."
+        String idadeInput = scanner.nextLine()
+        Integer idade = idadeInput?.toInteger() ?: 0 // Convert to Integer OR default is 0
+        return new PessoaFisica(nome: nome, email: email, descricao: descricao, CEP: CEP, estado: estado, competencias: competencias, cpf: cpf, idade: idade)
+        } catch (Exception e) {
+            println "Erro ao obter inputs do usuário: ${e.message}"
+            return null
         }
     }
+
+    static void cadastroCandidatos(List<PessoaFisica> candidatos) {
+        PessoaFisica candidato = getInputs()
+        addCandidato(candidatos, candidato)
+        println "Candidato(s) cadastrado(s) com sucesso! Voltando ao menu principal..."
+    }
+
+    static void addCandidato(List<PessoaFisica> candidatos, PessoaFisica candidato) {
+        candidatos.add(candidato)
+    }
 }
+
