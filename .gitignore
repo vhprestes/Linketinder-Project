@@ -15,6 +15,8 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+/frontend/node_modules/**
+/frontend/dist/**
 
 ### Eclipse ###
 .apt_generated
@@ -3317,3 +3319,4 @@ bin/
 /frontend/node_modules/.package-lock.json
 /frontend/dist/service/cadastroEmpresa.js
 /frontend/dist/app.min.js
+/frontend/node_modules/moment/dist/locale/az.js
