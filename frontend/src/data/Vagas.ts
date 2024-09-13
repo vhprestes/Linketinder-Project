@@ -46,31 +46,31 @@ export class Vagas {
       nome: "Desenvolvedor front-end",
       estado: "GO",
       descricao: "Desenvolvimento front end focado em UI/UX",
-      competencias: [],
+      competencias: ["Java", "Groovy"],
     },
     {
       nome: "Desenvolvedor backend",
       estado: "RJ",
       descricao: "Desenvolvedor backend focado em performance",
-      competencias: [],
+      competencias: ["Javascript", "Typescript"],
     },
     {
       nome: "Desenvolvedor fullstack",
       estado: "PR",
       descricao: "Desenvolvedor fullstack generalista",
-      competencias: [],
+      competencias: ["Typescript, Angular"],
     },
     {
       nome: "Desenvolvedor Front-End",
       estado: "MG",
       descricao: "Dev Front-End focado em integrações",
-      competencias: [],
+      competencias: ["Python"],
     },
     {
       nome: "Desenvolvedor Full-Stack",
       estado: "RJ",
       descricao: "Preferencia por Front-End mas também trabalho com Back-End",
-      competencias: [],
+      competencias: ["Java", "Python"],
     },
   ];
 
