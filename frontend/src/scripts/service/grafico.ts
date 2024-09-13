@@ -1,16 +1,22 @@
 import Chart from "chart.js/auto";
-import {ListaUser} from "../../data/ListaUser";
+import { ListaUser } from "../../data/ListaUser";
 
 export class GraficosCandidatos {
 
   public static gerarGrafico(): object {
     const buscarCompetencias: any = {};
 
+    // Carregar candidatos do localStorage
+    ListaUser.loadCandidatosFromLocalStorage();
 
-    // competencia counter
+    // Função para normalizar os nomes das competências
+    const normalizeCompetencia = (competencia: string) => competencia.trim().toLowerCase();
+
+    // Contar competências
     ListaUser.candidatos.forEach(candidato => {
       candidato.competencias.forEach(competencia => {
-        buscarCompetencias[competencia] ? buscarCompetencias[competencia]++ : buscarCompetencias[competencia] = 1;
+        const normalizedCompetencia = normalizeCompetencia(competencia);
+        buscarCompetencias[normalizedCompetencia] ? buscarCompetencias[normalizedCompetencia]++ : buscarCompetencias[normalizedCompetencia] = 1;
       });
     });
 
@@ -20,8 +26,6 @@ export class GraficosCandidatos {
     }
     const COMPETENCIAS = Object.keys(buscarCompetencias);
     const DATA = Object.values(buscarCompetencias);
-
-
 
     const chart = new Chart(CANVAS, {
       type: 'bar',

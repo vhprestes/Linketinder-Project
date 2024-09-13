@@ -4,59 +4,56 @@ import { Empresa} from "../scripts/Interfaces/Empresa";
 export class ListaUser {
 
   public static candidatos: Candidato[] = [
-    {
-      nome: "Brenda Lima e Silva",
-      email: "brenda@linda",
-      estado: "RJ",
-      descricao: "Inteligente, responsavel, minha pessoa favorita",
-      competencias: ["Java", "Groovy", "Python"],
-      cep: "26600000",
-      cpf: "11122233344",
-      idade: "20",
-    },
-    {
-      nome: "Julia Marias",
-      email: "julia@maria.com",
-      estado: "PE",
-      descricao: "gente boa",
-      competencias: ["TypeScript", "JavaScript"],
-      cep: "23812-310",
-      cpf: "22233344455",
-      idade: "25",
-    },
-
-    {
-      nome: "Ana Helena",
-      email: "ana@helena.com",
-      estado: "BA",
-      descricao: "Pessoa empolgante, calma e comunicativa",
-      competencias: ["JavaScript", "Angular", "Scrumban"],
-      cep: "44700000",
-      cpf: "33344455566",
-      idade: "40",
-    },
-
-    {
-      nome: "Renato Russo",
-      email: "renato@russo.com",
-      estado: "DF",
-      descricao: "Cantor e compositor, super antenado em tecnologia",
-      competencias: ["Java", "Angular", "Javascript"],
-      cep: "70040010",
-      cpf: "44455566677",
-      idade: "41",
-    },
-
-    {
-      nome: "Airton Senna",
-      email: "seninha@fast.com",
-      estado: "SP",
-      descricao: "Piloto de formula 1, super rapido e eficiente",
-      competencias: ["Angular", "Python"],
-      cep: "11533400",
-      cpf: "55566677788",
-      idade: "38"
-    },
+    new Candidato(
+        "José da Silva",
+        "jose@gmail.com",
+        "RJ",
+        "Pessoa super comunicativa e empolgante",
+        ["Java", "Groovy", "Python"],
+        "26600000",
+        "11122233344",
+        "20"
+    ),
+    new Candidato(
+        "Julia Marias",
+        "julia@maria.com",
+        "PE",
+        "gente boa",
+        ["TypeScript", "JavaScript"],
+        "23812-310",
+        "22233344455",
+        "25"
+    ),
+    new Candidato(
+        "Ana Helena",
+        "ana@helena.com",
+        "BA",
+        "Pessoa empolgante, calma e comunicativa",
+        ["JavaScript", "Angular"],
+        "44700000",
+        "33344455566",
+        "40"
+    ),
+    new Candidato(
+        "Renato Russo",
+        "renato@russo.com",
+        "DF",
+        "Cantor e compositor, super antenado em tecnologia",
+        ["Java", "Angular", "Javascript"],
+        "70040010",
+        "44455566677",
+        "41"
+    ),
+    new Candidato(
+        "Airton Senna",
+        "seninha@fast.com",
+        "SP",
+        "Piloto de formula 1, super rapido e eficiente",
+        ["Angular", "Python"],
+        "11533400",
+        "55566677788",
+        "38"
+    ),
   ];
 
   public static empresas: Empresa[] = [
@@ -114,4 +111,21 @@ export class ListaUser {
       cnpj: "55666777000188",
     },
   ];
+
+
+  public static loadCandidatosFromLocalStorage() {
+    const savedCandidatos = JSON.parse(localStorage.getItem('CandidadosAtualizados') || '[]');
+    if (savedCandidatos.length > 4) {
+      this.candidatos = savedCandidatos.map((c: any) => new Candidato(
+          c._nome,
+          c._email,
+          c._estado,
+          c._descricao,
+          c._competencias,
+          c._cep,
+          c._cpf,
+          c._idade
+      ));
+    }
+  }
 }
