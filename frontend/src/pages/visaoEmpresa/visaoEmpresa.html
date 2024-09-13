@@ -90,24 +90,27 @@
     </div>
   </div>
 
-  <div class="mt-4">
-    <h2>Lista de Vagas</h2>
-    <table class="table table-dark table-striped mt-3" id="tabelaVagas">
-      <thead>
-      <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Competências</th>
-        <th scope="col">Descrição</th>
-      </tr>
-      </thead>
-      <tbody id="corpoTabelaVagas">
-      <!-- Conteúdo da tabela será inserido aqui -->
-      </tbody>
-    </table>
-  </div>
+  <h1>Listagem de Candidatos</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Estado</th>
+      <th>Descrição</th>
+      <th>Competências</th>
+      <th>CEP</th>
+      <th>CPF</th>
+      <th>Idade</th>
+    </tr>
+    </thead>
+    <tbody id="candidatosTableBody">
+    <!-- Linhas da tabela serão inseridas aqui -->
+    </tbody>
+  </table>
 
-<!--  TODO -->
+
+<!--  DONE -->
   <div class="row g-1" id="myChartContainer">
     <h4 class="text-center mt-4">Competências mais requisitadas</h4>
     <canvas id="competenciasChart" ></canvas>
