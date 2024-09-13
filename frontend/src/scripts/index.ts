@@ -3,6 +3,8 @@ import {CriaCandidatoToLocalStorage} from "./service/cadastroCandidato";
 import {Candidato} from "./Interfaces/Candidato";
 import {ListaUser} from "../data/ListaUser";
 import {GraficosCandidatos} from "./service/grafico";
+import {CriaEmpresaToLocalStorage} from "./service/cadastroEmpresa";
+import {ListagemCandidatos} from "./service/listagemCandidatos";
 
 console.log('AOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
 
@@ -25,6 +27,14 @@ if (document.getElementById('competenciasChart')) {
 if (document.getElementById('formCandidato')) {
     console.log('entrou no na condicional do index.ts');
   CriaCandidatoToLocalStorage.CriaCandidatoToLocalStorage();
+}
+
+if (document.getElementById('formEmpresa')) {
+  CriaEmpresaToLocalStorage.CriaEmpresaToLocalStorage();
+}
+
+if (document.getElementById('candidatosTableBody')) {
+  ListagemCandidatos.renderTable().then(r => console.log('Tabela de candidatos renderizada.'));
 }
 
 // let newCant = new Candidato('nome', 'email', 'estado', 'descricao', ['competencia'], 'cep', 'cpf', 'idade');

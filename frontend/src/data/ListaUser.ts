@@ -56,60 +56,57 @@ export class ListaUser {
     ),
   ];
 
-  public static empresas: Empresa[] = [
-    {
-      nome: "RC PERFORMANCE LTDA",
-      email: "rcperformance@email.com",
-      estado: "RJ",
-      descricao: "Empresa de tecnologia, com foco em desenvolvimento de software de alta performance",
-      competencias: ["Java", "Python"],
-      cep: "26600000",
-      pais: "Brasil",
-      cnpj: "11222333000999"
-    },
-    {
-      nome: "WEBUDDIES LTDA",
-      email: "contado@webuddies.com",
-      estado: "RJ",
-      descricao: "startup focada em web",
-      competencias: ["TypeScript", "JavaScript"],
-      cep: "2660000",
-      pais: "Brasil",
-      cnpj: "22233344000111",
-    },
-
-    {
-      nome: "Pereira LTDAH",
-      email: "pereira@ltdah.com",
-      estado: "RJ",
-      descricao: "Focada em tecnologias no combate ao TDAH",
-      competencias: ["JavaScript", "TypeScript", "Groovy", "Java"],
-      cep: "95044000",
-      pais: "Brasil",
-      cnpj: "33344455000222",
-    },
-
-    {
-      nome: "Paracatech",
-      email: "contato@paraca.tech",
-      estado: "RJ",
-      descricao: "Empresa regional de tecnologia",
-      competencias: ["Java", "TypeScript", "Angular"],
-      cep: "26600000",
-      pais: "Brasil",
-      cnpj: "44455566000333",
-    },
-
-    {
-      nome: "Teclabs",
-      email: "oi@teclabs.com",
-      estado: "GO",
-      descricao: "Empresa de testes de software e hardware",
-      competencias: ["Angular", "Python", "TypeScript"],
-      cep: "72000000",
-      pais: "Brasil",
-      cnpj: "55666777000188",
-    },
+    public static empresas: Empresa[] = [
+    new Empresa(
+        "RC PERFORMANCE LTDA",
+        "rcperformance@email.com",
+        "RJ",
+        "Empresa de tecnologia, com foco em desenvolvimento de software de alta performance",
+        ["Java", "Python"],
+        "26600000",
+        "Brasil",
+        "11222333000999"
+    ),
+    new Empresa(
+        "WEBUDDIES LTDA",
+        "contado@webuddies.com",
+        "RJ",
+        "startup focada em web",
+        ["TypeScript", "JavaScript"],
+        "2660000",
+        "Brasil",
+        "22233344000111"
+    ),
+    new Empresa(
+        "Pereira LTDAH",
+        "pereira@ltdah.com",
+        "RJ",
+        "Focada em tecnologias no combate ao TDAH",
+        ["JavaScript", "TypeScript", "Groovy", "Java"],
+        "95044000",
+        "Brasil",
+        "33344455000222"
+    ),
+    new Empresa(
+        "Paracatech",
+        "contato@paraca.tech",
+        "RJ",
+        "Empresa regional de tecnologia",
+        ["Java", "TypeScript", "Angular"],
+        "26600000",
+        "Brasil",
+        "44455566000333"
+    ),
+    new Empresa(
+        "Teclabs",
+        "oi@teclabs.com",
+        "GO",
+        "Empresa de testes de software e hardware",
+        ["Angular", "Python", "TypeScript"],
+        "72000000",
+        "Brasil",
+        "55666777000188"
+    ),
   ];
 
 
@@ -125,6 +122,23 @@ export class ListaUser {
           c._cep,
           c._cpf,
           c._idade
+      ));
+    }
+  }
+
+
+  public static loadEmpresasFromLocalStorage() {
+    const savedEmpresas = JSON.parse(localStorage.getItem('EmpresasAtualizadas') || '[]');
+    if (savedEmpresas.length > 0) {
+      this.empresas = savedEmpresas.map((e: any) => new Empresa(
+          e._nome,
+          e._email,
+          e._estado,
+          e._descricao,
+          e._competencias,
+          e._cep,
+          e._pais,
+          e._cnpj
       ));
     }
   }
