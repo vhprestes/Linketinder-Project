@@ -35,8 +35,34 @@ export class CriaEmpresaToLocalStorage {
             competenciasSelecionadas.push(checkbox.getAttribute('value'));
           });
 
-          if (regexValidation.validarEmpresaFormData(empresaNome.value, cnpj.value, email.value, estado.value, cep.value, pais.value, descricao.value)) {
+
+          if(!regexValidation.validateCEP(cep.value)) {
             event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateCnpj(cnpj.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateEmail(email.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateEstado(estado.value.trim())) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateDescricao(descricao.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateNomeEmpresa(empresaNome.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validatePais(pais.value.trim())) {
+            event.preventDefault();
+            return;
           }
 
           const empresaData = {

@@ -1,6 +1,6 @@
 import { ListaUser } from "../../data/ListaUser";
 import { Candidato } from "../Interfaces/Candidato";
-import {regexValidation} from "./regexValidation";
+import { regexValidation } from "./regexValidation";
 
 export class CriaCandidatoToLocalStorage {
 
@@ -31,9 +31,59 @@ export class CriaCandidatoToLocalStorage {
             competenciasSelecionadas.push(checkbox.getAttribute('value'));
           });
 
-          if (!regexValidation.validarCandidatoFormData(candidatoNome.value, cpf.value, idade.value, email.value, estado.value, cep.value, descricao.value)) {
+
+          if(!regexValidation.validateCEP(cep.value)) {
             event.preventDefault();
+            return;
           }
+          if(!regexValidation.validateCpf(cpf.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateIdade(idade.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateEmail(email.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateEstado(estado.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateDescricao(descricao.value)) {
+            event.preventDefault();
+            return;
+          }
+          if(!regexValidation.validateNome(candidatoNome.value)) {
+            event.preventDefault();
+            return;
+          }
+
+
+
+
+
+
+          // let validacao: boolean = regexValidation.validarCandidatoFormData(
+          //     candidatoNome.value,
+          //     cpf.value, idade.value,
+          //     email.value.trim(),
+          //     estado.value.trim(),
+          //     cep.value.trim(),
+          //     descricao.value);
+          // if (!validacao) {
+          //   // console.log('Nome', candidatoNome.value);
+          //   // console.log('CPF', cpf.value);
+          //   // console.log('Idade', idade.value);
+          //   // console.log('Email', email.value.trim());
+          //   // console.log('Estado', estado.value.trim());
+          //   // console.log('CEP', cep.value.trim());
+          //   // console.log('Descrição', descricao.value);
+          //   event.preventDefault();
+          //   return;
+          // }
 
           const candidatoData = {
             nome: candidatoNome.value,
