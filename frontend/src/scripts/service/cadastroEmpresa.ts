@@ -1,9 +1,14 @@
 import { ListaUser } from "../../data/ListaUser";
 import { Empresa } from "../Interfaces/Empresa";
+import {regexValidation} from "./regexValidation";
 
 export class CriaEmpresaToLocalStorage {
 
   public static CriaEmpresaToLocalStorage() {
+
+    // test it first
+    ListaUser.loadEmpresasFromLocalStorage();
+
 
     const formEmpresa: any = document.getElementById('formEmpresa');
 
@@ -29,6 +34,10 @@ export class CriaEmpresaToLocalStorage {
           competencias.forEach(function (checkbox: any) {
             competenciasSelecionadas.push(checkbox.getAttribute('value'));
           });
+
+          if (regexValidation.validarEmpresaFormData(empresaNome.value, cnpj.value, email.value, estado.value, cep.value, pais.value, descricao.value)) {
+            event.preventDefault();
+          }
 
           const empresaData = {
             nome: empresaNome.value,

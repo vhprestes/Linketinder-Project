@@ -1,5 +1,6 @@
 import { ListaUser } from "../../data/ListaUser";
 import { Candidato } from "../Interfaces/Candidato";
+import {regexValidation} from "./regexValidation";
 
 export class CriaCandidatoToLocalStorage {
 
@@ -29,6 +30,10 @@ export class CriaCandidatoToLocalStorage {
           competencias.forEach(function (checkbox: any) {
             competenciasSelecionadas.push(checkbox.getAttribute('value'));
           });
+
+          if (!regexValidation.validarCandidatoFormData(candidatoNome.value, cpf.value, idade.value, email.value, estado.value, cep.value, descricao.value)) {
+            event.preventDefault();
+          }
 
           const candidatoData = {
             nome: candidatoNome.value,
