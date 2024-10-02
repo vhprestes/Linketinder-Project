@@ -1,11 +1,16 @@
 package org.acczg.models
 
 
-interface IPessoa {
+class IPessoa {
+    int id
     String nome
     String email
-    String descricao
-    String CEP
     String estado
-    List<String> competencias
+    String descricao
+    String cep
+
+    @Override
+    String toString() {
+        return super.toString()
+    }
 }

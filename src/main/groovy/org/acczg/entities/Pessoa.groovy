@@ -2,7 +2,7 @@ package org.acczg.entities
 
 import org.acczg.models.IPessoa
 
-abstract  class Pessoa implements IPessoa {
+abstract  class Pessoa extends IPessoa {
     String nome
     String email
     String descricao
