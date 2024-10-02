@@ -6,7 +6,7 @@ CREATE TABLE "candidatos" (
   "email" varchar(120) NOT NULL,
   "cpf" varchar(20) NOT NULL,
   "estado_id" int NOT NULL,
-  "pais_id" varchar(40) NOT NULL,
+  "pais_id" int NOT NULL,
   "cep" varchar(20) NOT NULL,
   "descricao" varchar(200) NOT NULL,
   "senha" varchar(120) NOT NULL
@@ -71,15 +71,15 @@ CREATE TABLE "match" (
   "vaga_id" int
 );
 
-ALTER TABLE "competencias_candidatos" ADD FOREIGN KEY ("id_candidato") REFERENCES "candidatos" ("id");
-
-ALTER TABLE "competencias_vagas" ADD FOREIGN KEY ("id_vagas") REFERENCES "vagas" ("id");
+ALTER TABLE "competencias_candidatos" ADD FOREIGN KEY ("id_candidato") REFERENCES "candidatos" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "competencias_candidatos" ADD FOREIGN KEY ("id_competencias") REFERENCES "competencias" ("id");
 
+ALTER TABLE "competencias_vagas" ADD FOREIGN KEY ("id_vagas") REFERENCES "vagas" ("id") ON DELETE CASCADE;
+
 ALTER TABLE "competencias_vagas" ADD FOREIGN KEY ("id_competencias") REFERENCES "competencias" ("id");
 
-ALTER TABLE "vagas" ADD FOREIGN KEY ("empresa_id") REFERENCES "empresa" ("id");
+ALTER TABLE "vagas" ADD FOREIGN KEY ("empresa_id") REFERENCES "empresa" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "candidatos" ADD FOREIGN KEY ("pais_id") REFERENCES "pais" ("id");
 
@@ -131,7 +131,7 @@ VALUES
     ('SE', 'Sergipe'),
     ('TO', 'Tocantins');
 
-INSERT INTO "empresas" (nome, descricao, cnpj, email, pais_id, cep, senha, estado_id)
+INSERT INTO "empresa" (nome, descricao, cnpj, email, pais_id, cep, senha, estado_id)
 VALUES
     ('Sandubas Samdubinhas', 'sandubas tecnologicos',  '12345678901234', 'sandubsubs@food.com', 1, '12345678', '123456', 9 ),
     ('Pizzaria Tech','pizzas com alta tecnologia', '23456789012345', 'techizzas@tech.com', 1, 22660000, '123456', 2),
