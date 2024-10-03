@@ -7,6 +7,7 @@ static void main(String[] args) {
 
     Boolean menuON = true
 
+
     while (menuON) {
         menu()
         println "Escolha uma opção: "
@@ -16,13 +17,13 @@ static void main(String[] args) {
                 MenuCandidatos.menuCandidato()
                 break
             case 2:
-//      Listar empresas funcao
+//      menu empresas
                 break
             case 3:
-//       Cadastrar candidatos funcao
+//       menu competencias
                 break
             case 4:
-//                Cadastrar empresas funcao
+//        menu vaga
                 break
             case 0:
                 println "Saindo do programa"
@@ -34,6 +35,7 @@ static void main(String[] args) {
 }
 
 void menu() {
+    println "Bem vindo ao menu inicial!"
     println "1. Menu Candidatos"
     println "2. Menu Empresas"
     println "3. Menu Vagas"
