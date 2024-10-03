@@ -12,16 +12,6 @@ class CompetenciaService {
         }
     }
 
-    List<Competencia> competenciasCadastradas() {
-
-        List<Competencia> listaCompetencias
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-
-        listaCompetencias = competenciaDAO.listar()
-        return listaCompetencias
-
-    }
-
     static cadastrarCompetencia(Competencia competencia) {
 
         boolean retornoDB
@@ -29,12 +19,11 @@ class CompetenciaService {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
         retornoDB = competenciaDAO.inserir(competencia)
 
-        if (retornoDB){
-            println("\nCompetência cadastrada com sucesso!!!")
+        if (retornoDB) {
+            println "Competencia cadastrada com sucesso"
         } else {
-            println("\nOcorreu um erro no cadastro")
+            println "Erro no cadastro"
         }
-
     }
 
     static alterarCompetencia(Competencia competencia) {
@@ -44,12 +33,11 @@ class CompetenciaService {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
         retornoDB = competenciaDAO.alterar(competencia)
 
-        if (retornoDB){
-            println("\nCompetência alterada com sucesso!!!")
+        if (retornoDB) {
+            println "Competência alterada com sucesso"
         } else {
-            println("\nOcorreu um erro na alteração")
+            println "Erro na alteração"
         }
-
     }
 
     static deletarCompetencia(Integer id) {
@@ -59,11 +47,21 @@ class CompetenciaService {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
         retornoDB = competenciaDAO.remover(id)
 
-        if (retornoDB){
-            println("\nCompetência deletada com sucesso!!!")
+        if (retornoDB) {
+            println "Competência deletada com sucesso"
         } else {
-            println("\nOcorreu um erro ao tentar deletar")
+            println "Erro ao tentar deletar a competência"
         }
+
+    }
+
+    List<Competencia> competenciasCadastradas() {
+
+        List<Competencia> listaCompetencias
+        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+
+        listaCompetencias = competenciaDAO.listar()
+        return listaCompetencias
 
     }
 
