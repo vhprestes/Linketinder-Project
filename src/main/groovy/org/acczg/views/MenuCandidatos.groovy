@@ -8,17 +8,17 @@ class MenuCandidatos {
     static menuCandidato() {
         ControllerCandidato controllerCandidato = new ControllerCandidato()
         Boolean menuON = true
-        String menuCandidato =
-                println "Por favor escolha uma opção:"
-        println "1. Listar Candidatos"
-        println "2. Cadastrar Candidato"
-        println "3. Alterar Candidato"
-        println "4. Excluir Candidato."
-        println "0. Voltar ao menu anterior"
+        String menuCandidato = "Por favor escolha uma opção:\n" +
+                "1. Listar Candidatos\n" +
+                "2. Cadastrar Candidato\n" +
+                "3. Alterar Candidato\n" +
+                "4. Excluir Candidato\n" +
+                "0. Voltar ao menu anterior"
 
 
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
+            println menuCandidato
 //            parsa pra garantir e trata dps se der ruim
             String input = scanner.nextLine()
 
