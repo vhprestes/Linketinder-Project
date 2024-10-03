@@ -68,7 +68,7 @@ class ControllerEmpresa {
 
         EmpresaService.listarEmpresas()
 
-        println "Escolha qual empresa você deseja alterar:"
+        println "Escolha o código(id) da empresa a ser alterada:"
         this.opcao = Integer.parseInt(ler.nextLine())
 
         println("Altere o nome da empresa:")
@@ -114,7 +114,7 @@ class ControllerEmpresa {
     void deletarEmpresa() {
 
         EmpresaService.listarEmpresas()
-        println "Escolha o id da empresa a ser deletada:"
+        println "Escolha o código(id) da empresa a ser deletada:"
         this.opcao = Integer.parseInt(ler.nextLine())
 
         EmpresaService.deletarEmpresa(this.opcao)
