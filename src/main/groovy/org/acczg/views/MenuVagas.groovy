@@ -1,11 +1,12 @@
 package org.acczg.views
 
+import org.acczg.controller.ControllerVagas
 import org.acczg.utils.DivisorLinha
 
 class MenuVagas {
 
     static boolean menuVaga() {
-        ControllerVaga controllerVaga = new ControllerVaga()
+        ControllerVagas controllerVaga = new ControllerVagas()
         Boolean menuON = true
         String menuVaga = "Por favor escolha uma opção:\n" +
                 "1. Listar Vagas\n" +
