@@ -112,6 +112,7 @@ class ControllerCandidato {
                     novaCompetencia.setCompetencia(competencia)
                     competenciaService.cadastrarCompetencia(novaCompetencia)
                     competenciasDB = competenciaService.competenciasCadastradas()
+//                  LAST ID
                     CandidatoService.cadastrarCompetenciaCandidato(candidatos[-1].getId(), competenciasDB[-1].getId())
                     break
                 default:
@@ -126,7 +127,7 @@ class ControllerCandidato {
 
         CandidatoService.listarCandidatos()
 
-        println ("Escolha qual candidato você deseja alterar:")
+        println ("Escolha o código (id) do candidato a ser alterado:")
         this.opcao = Integer.parseInt(ler.nextLine())
 
         println("Altere o nome do candidato:")
