@@ -20,9 +20,9 @@ class CandidatoService {
         retornoDB = candidatoDAO.inserir(candidato)
 
         if (retornoDB) {
-            println("\nCandidato cadastrada com sucesso!")
+            println "Candidato cadastrada com sucesso!"
         } else {
-            println("\nOcorreu um erro no cadastro")
+            println "Erro no cadastro"
         }
     }
 
@@ -33,9 +33,9 @@ class CandidatoService {
         retornoDB = candidatoDAO.inserirCompetenciaCandidato(candidato_id, competencia_id)
 
         if (retornoDB) {
-            println("Competência cadastrada com sucesso")
+            println "Competência cadastrada com sucesso"
         } else {
-            println("Erro no cadastro da nova competência")
+            println "Erro no cadastro da nova competência"
         }
     }
 
@@ -46,9 +46,9 @@ class CandidatoService {
         retornoDB = candidatoDAO.alterar(candidato)
 
         if (retornoDB) {
-            println("Candidato alterado com sucesso")
+            println "Candidato alterado com sucesso"
         } else {
-            println("Erro na alteração no candidato (service: alterarCandidato)")
+            println "Erro na alteração no candidato (service: alterarCandidato)"
         }
     }
 
@@ -59,14 +59,11 @@ class CandidatoService {
         retornoDB = candidatoDAO.remover(id)
 
         if (retornoDB) {
-            println("Candidato deletado com sucesso")
+            println "Candidato deletado com sucesso"
         } else {
-            println("Erro ao tentar deletar o candidato (service: deletarCandidato)")
+            println "Erro ao tentar deletar o candidato (service: deletarCandidato)"
         }
     }
-
-
-
 
     List<Candidato> candidatosCadastrados() {
 
