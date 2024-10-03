@@ -40,8 +40,8 @@ void menu() {
     println "Bem vindo ao menu inicial!"
     println "1. Menu Candidatos"
     println "2. Menu Empresas"
-    println "3. Menu Vagas"
-    println "4. Menu Competencias"
+    println "3. Menu Competencias"
+    println "4. Menu Vagas"
     println "0. Sair"
 }
 
