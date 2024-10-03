@@ -1,6 +1,7 @@
 package org.acczg.controller
 
 import org.acczg.models.Empresa
+import org.acczg.service.EmpresaService
 import org.acczg.utils.Estados
 
 class ControllerEmpresa {
