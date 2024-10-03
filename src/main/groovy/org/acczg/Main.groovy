@@ -2,6 +2,7 @@ package org.acczg
 
 
 import org.acczg.views.MenuCandidatos
+import org.acczg.views.MenuCompetencias
 import org.acczg.views.MenuEmpresas
 
 static void main(String[] args) {
@@ -21,7 +22,7 @@ static void main(String[] args) {
                 MenuEmpresas.menuEmpresa()
                 break
             case 3:
-//       menu competencias
+                MenuCompetencias.menuCompetencia()
                 break
             case 4:
 //        menu vaga
