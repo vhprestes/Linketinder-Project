@@ -1,5 +1,6 @@
 package org.acczg.views
 
+import org.acczg.controller.ControllerCompetencia
 import org.acczg.utils.DivisorLinha
 
 class MenuCompetencias {
