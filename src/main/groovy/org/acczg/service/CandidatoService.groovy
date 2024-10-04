@@ -39,11 +39,11 @@ class CandidatoService {
         }
     }
 
-    static alterarCandidato(Candidato candidato) {
+    static alterarCandidato(Candidato candidato, List<Integer> novasCompetencias) {
 
         boolean retornoDB
         CandidatoDAO candidatoDAO = new CandidatoDAO()
-        retornoDB = candidatoDAO.alterar(candidato)
+        retornoDB = candidatoDAO.alterar(candidato, novasCompetencias)
 
         if (retornoDB) {
             println "Candidato alterado com sucesso"

@@ -111,30 +111,65 @@ class CandidatoDAO {
         }
     }
 
-    boolean alterar(Candidato candidato) {
-        String query = "UPDATE candidatos SET nome=?, sobrenome=?, cpf=?, data_nascimento=?, email=?, descricao=?, senha=?, pais_id=?, cep=?, estado_id=? " +
-                "WHERE id=?"
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy")
-            java.util.Date dataUtil = formatador.parse(candidato.getDataNascimento())
-            Date dataSQL = new Date(dataUtil.getTime())
+    boolean alterar(Candidato candidato, List<Integer> novasCompetencias) {
+        String query = "UPDATE candidatos SET nome=?, sobrenome=?, cpf=?, data_nascimento=?, email=?, descricao=?, senha=?, pais_id=?, cep=?, estado_id=? WHERE id=?"
+        String deleteCompetenciasQuery = "DELETE FROM competencias_candidatos WHERE id_candidato=?"
+        String insertCompetenciaQuery = "INSERT INTO competencias_candidatos(id_candidato, id_competencias) VALUES (?,?)"
+        try {
+            connection.setAutoCommit(false)
 
-            stmt.setString(1, candidato.getNome())
-            stmt.setString(2, candidato.getSobrenome())
-            stmt.setString(3, candidato.getCpf())
-            stmt.setDate(4, dataSQL)
-            stmt.setString(5, candidato.getEmail())
-            stmt.setString(6, candidato.getDescricao())
-            stmt.setString(7, candidato.getSenha())
-            stmt.setInt(8, Integer.parseInt(candidato.getPais()))
-            stmt.setString(9, candidato.getCep())
-            stmt.setInt(10, Integer.parseInt(candidato.getEstado()))
-            stmt.setInt(11, candidato.getId())
-            stmt.execute()
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+
+                SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy")
+                java.util.Date dataUtil = formatador.parse(candidato.getDataNascimento())
+                Date dataSQL = new Date(dataUtil.getTime())
+
+
+                stmt.setString(1, candidato.getNome())
+                stmt.setString(2, candidato.getSobrenome())
+                stmt.setString(3, candidato.getCpf())
+                stmt.setDate(4, dataSQL)
+                stmt.setString(5, candidato.getEmail())
+                stmt.setString(6, candidato.getDescricao())
+                stmt.setString(7, candidato.getSenha())
+                stmt.setInt(8, Integer.parseInt(candidato.getPais()))
+                stmt.setString(9, candidato.getCep())
+                stmt.setInt(10, Integer.parseInt(candidato.getEstado()))
+                stmt.setInt(11, candidato.getId())
+                stmt.execute()
+            }
+
+
+            try (PreparedStatement stmtDelete = connection.prepareStatement(deleteCompetenciasQuery)) {
+                stmtDelete.setInt(1, candidato.getId())
+                stmtDelete.execute()
+            }
+
+            try (PreparedStatement stmtInsert = connection.prepareStatement(insertCompetenciaQuery)) {
+                for (Integer competenciaId : novasCompetencias) {
+                    stmtInsert.setInt(1, candidato.getId())
+                    stmtInsert.setInt(2, competenciaId)
+                    stmtInsert.addBatch()
+                }
+                stmtInsert.executeBatch()
+            }
+
+            connection.commit()
             return true
         } catch (Exception e) {
             e.printStackTrace()
+            try {
+                connection.rollback()
+            } catch (Exception rollbackException) {
+                rollbackException.printStackTrace()
+            }
             return false
+        } finally {
+            try {
+                connection.setAutoCommit(true)
+            } catch (Exception e) {
+                e.printStackTrace()
+            }
         }
     }
 

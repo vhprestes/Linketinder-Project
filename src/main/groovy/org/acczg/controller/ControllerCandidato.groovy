@@ -122,9 +122,7 @@ class ControllerCandidato {
 
     }
 
-    void alterarCandidato(){
-        Scanner ler = new Scanner(System.in)
-
+    void alterarCandidato() {
         CandidatoService.listarCandidatos()
 
         println ("Escolha o código (id) do candidato a ser alterado:")
@@ -174,8 +172,41 @@ class ControllerCandidato {
         this.novoCandidato.setEstado(this.estado)
         this.novoCandidato.setSenha(this.senha)
 
-        CandidatoService.alterarCandidato(this.novoCandidato)
+        println "Digite a quantidade de competências que o candidato terá:"
+        Integer qtdCompetencias = Integer.parseInt(ler.nextLine())
 
+        List<Integer> novasCompetencias = new ArrayList<>()
+        for (int i = 0; i < qtdCompetencias; i++) {
+            println "1. Utilizar competências cadastradas"
+            println "2. Cadastrar nova competência"
+            int num = Integer.parseInt(ler.nextLine())
+
+            switch (num) {
+                case 1:
+                    CompetenciaService competenciaService = new CompetenciaService()
+                    competenciaService.listarCompetencias()
+                    println "Selecione o id da competência ${i + 1}:"
+                    Integer idCompetencia = Integer.parseInt(ler.nextLine())
+                    novasCompetencias.add(idCompetencia)
+                    break
+                case 2:
+                    CompetenciaService competenciaService = new CompetenciaService()
+                    println "Digite a competência a ser cadastrada:"
+                    String competencia = ler.nextLine()
+                    competencia.capitalize()
+                    Competencia novaCompetencia = new Competencia()
+                    novaCompetencia.setCompetencia(competencia)
+                    competenciaService.cadastrarCompetencia(novaCompetencia)
+                    List<Competencia> competenciasDB = competenciaService.obterCompetenciasCadastradas()
+                    novasCompetencias.add(competenciasDB[-1].getId())
+                    break
+                default:
+                    println "Erro: opção inválida!"
+                    i-- // Decrementa o contador para repetir a iteração
+            }
+        }
+
+        CandidatoService.alterarCandidato(novoCandidato, novasCompetencias)
     }
 
     void deletarCandidato(){
