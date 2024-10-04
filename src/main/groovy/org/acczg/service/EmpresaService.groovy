@@ -5,61 +5,48 @@ import org.acczg.models.Empresa
 
 class EmpresaService {
 
-    static listarEmpresas() {
-
+    static void listarEmpresas() {
         EmpresaDAO empresaDAO = new EmpresaDAO()
         empresaDAO.listar().each { empresa ->
             println empresa.toString()
         }
     }
 
-    static cadastrarEmpresa(Empresa empresa) {
-
-        boolean retornoDB
+    List<Empresa> obterEmpresasCadastradas() {
         EmpresaDAO empresaDAO = new EmpresaDAO()
-        retornoDB = empresaDAO.inserir(empresa)
+        return empresaDAO.listar()
+    }
 
-        if (retornoDB) {
+    static void cadastrarEmpresa(Empresa empresa) {
+        EmpresaDAO empresaDAO = new EmpresaDAO()
+        boolean sucesso = empresaDAO.inserir(empresa)
+
+        if (sucesso) {
             println "Empresa cadastrada com sucesso"
         } else {
-            println "Erro no cadastro"
+            println "Erro no cadastro de empresa"
         }
     }
 
-    static alterarEmpresa(Empresa empresa) {
-
-        boolean retornoDB
+    static void alterarEmpresa(Empresa empresa) {
         EmpresaDAO empresaDAO = new EmpresaDAO()
-        retornoDB = empresaDAO.alterar(empresa)
+        boolean sucesso = empresaDAO.alterar(empresa)
 
-        if (retornoDB) {
+        if (sucesso) {
             println "Empresa alterada com sucesso"
         } else {
-            println "Erro na alteração da empresa"
+            println "Erro na alteração de empresa"
         }
     }
 
-    static deletarEmpresa(Integer id) {
-
-        boolean retornoDB
+    static void deletarEmpresa(Integer id) {
         EmpresaDAO empresaDAO = new EmpresaDAO()
-        retornoDB = empresaDAO.remover(id)
+        boolean sucesso = empresaDAO.remover(id)
 
-        if (retornoDB) {
+        if (sucesso) {
             println "Empresa deletada com sucesso"
         } else {
             println "Erro ao deletar empresa"
         }
-
     }
-
-    List<Empresa> empresasCadastradas() {
-
-        List<Empresa> listaEmpresa
-        EmpresaDAO empresaDAO = new EmpresaDAO()
-        listaEmpresa = empresaDAO.listar()
-        return listaEmpresa
-    }
-
 }
-

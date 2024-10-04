@@ -65,7 +65,7 @@ class CandidatoService {
         }
     }
 
-    List<Candidato> candidatosCadastrados() {
+    List<Candidato> obterCandidatosCadastrados() {
 
         List<Candidato> candidatosList
         CandidatoDAO candidatoDAO = new CandidatoDAO()

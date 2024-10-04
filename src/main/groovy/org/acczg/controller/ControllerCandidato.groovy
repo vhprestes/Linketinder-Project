@@ -88,11 +88,11 @@ class ControllerCandidato {
         println "Digite quantas competências o candidato possuí:"
         this.qtdCompetencias = Integer.parseInt(ler.nextLine())
 
-        List<Candidato> candidatos = candidatoService.candidatosCadastrados()
+        List<Candidato> candidatos = candidatoService.obterCandidatosCadastrados()
 
         for (int i = 0; i < qtdCompetencias; i++){
 
-            competenciasDB = competenciaService.competenciasCadastradas()
+            competenciasDB = competenciaService.obterCompetenciasCadastradas()
 
             println "1. Utilizar competências cadastradas"
             println "2. Cadastrar nova competência"
@@ -111,7 +111,7 @@ class ControllerCandidato {
                     competencia.capitalize()
                     novaCompetencia.setCompetencia(competencia)
                     competenciaService.cadastrarCompetencia(novaCompetencia)
-                    competenciasDB = competenciaService.competenciasCadastradas()
+                    competenciasDB = competenciaService.obterCompetenciasCadastradas()
 //                  LAST ID
                     CandidatoService.cadastrarCompetenciaCandidato(candidatos[-1].getId(), competenciasDB[-1].getId())
                     break

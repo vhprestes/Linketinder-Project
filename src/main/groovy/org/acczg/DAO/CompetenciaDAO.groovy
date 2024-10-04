@@ -12,65 +12,52 @@ class CompetenciaDAO {
     private Connection connection
 
     CompetenciaDAO() {
-
         try {
             Properties props = new Properties()
             props.setProperty("user", "postgres")
             props.setProperty("password", "postgres")
             props.setProperty("ssl", "false")
             String URL_SERVIDOR = "jdbc:postgresql://localhost:5432/postgres"
-
             this.connection = DriverManager.getConnection(URL_SERVIDOR, props)
-
         } catch (Exception e) {
             e.printStackTrace()
-            if (e instanceof ClassNotFoundException) {
-                System.err.println("Verifique o driver de conexão.")
-            } else {
-                System.err.println("Verifique se o servidor está ativo.")
-            }
+            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage())
         }
     }
 
     List<Competencia> listar() {
-        String sql = "SELECT * FROM competencias ORDER BY id"
-        List<Competencia> retorno = new ArrayList<>()
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql)
-            ResultSet resultado = stmt.executeQuery()
+        String query = "SELECT * FROM competencias ORDER BY id"
+        List<Competencia> competencias = new ArrayList<>()
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet resultado = stmt.executeQuery()) {
+
             while (resultado.next()) {
                 Competencia competencia = new Competencia()
                 competencia.setId(resultado.getInt("id"))
                 competencia.setCompetencia(resultado.getString("competencia"))
-                retorno.add(competencia)
+                competencias.add(competencia)
             }
         } catch (Exception e) {
             e.printStackTrace()
-        } finally {
-            connection.close()
         }
-        return retorno
+        return competencias
     }
 
     boolean inserir(Competencia competencia) {
-        String sql = "INSERT INTO competencias(competencia) VALUES (?)"
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql)
+        String query = "INSERT INTO competencias(competencia) VALUES (?)"
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, competencia.getCompetencia())
             stmt.execute()
             return true
         } catch (Exception e) {
             e.printStackTrace()
             return false
-        } finally {
-            connection.close()
         }
     }
 
     boolean alterar(Competencia competencia) {
-        String sql = "UPDATE competencias SET competencia=? WHERE id=?"
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql)
+        String query = "UPDATE competencias SET competencia=? WHERE id=?"
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, competencia.getCompetencia())
             stmt.setInt(2, competencia.getId())
             stmt.execute()
@@ -78,23 +65,41 @@ class CompetenciaDAO {
         } catch (Exception e) {
             e.printStackTrace()
             return false
-        } finally {
-            connection.close()
         }
     }
 
     boolean remover(Integer id) {
-        String sql = "DELETE FROM competencias WHERE id=?"
+        String deleteReferencesQuery = "DELETE FROM competencias_candidatos WHERE id_competencias=?"
+        String deleteCompetenciaQuery = "DELETE FROM competencias WHERE id=?"
         try {
-            PreparedStatement stmt = connection.prepareStatement(sql)
-            stmt.setInt(1, id)
-            stmt.execute()
+            connection.setAutoCommit(false)
+
+            try (PreparedStatement stmtReferences = connection.prepareStatement(deleteReferencesQuery)) {
+                stmtReferences.setInt(1, id)
+                stmtReferences.execute()
+            }
+
+            try (PreparedStatement stmt = connection.prepareStatement(deleteCompetenciaQuery)) {
+                stmt.setInt(1, id)
+                stmt.execute()
+            }
+
+            connection.commit()
             return true
         } catch (Exception e) {
             e.printStackTrace()
+            try {
+                connection.rollback()
+            } catch (Exception rollbackException) {
+                rollbackException.printStackTrace()
+            }
             return false
         } finally {
-            connection.close()
+            try {
+                connection.setAutoCommit(true)
+            } catch (Exception e) {
+                e.printStackTrace()
+            }
         }
     }
 }

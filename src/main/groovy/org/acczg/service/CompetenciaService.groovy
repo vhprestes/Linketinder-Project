@@ -4,65 +4,49 @@ import org.acczg.DAO.CompetenciaDAO
 import org.acczg.models.Competencia
 
 class CompetenciaService {
-    static listarCompetencias() {
 
+    static void listarCompetencias() {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
         competenciaDAO.listar().each { competencia ->
-            println competencia
+            println competencia.toString()
         }
     }
 
-    static cadastrarCompetencia(Competencia competencia) {
-
-        boolean retornoDB
-
+    List<Competencia> obterCompetenciasCadastradas() {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-        retornoDB = competenciaDAO.inserir(competencia)
+        return competenciaDAO.listar()
+    }
 
-        if (retornoDB) {
-            println "Competencia cadastrada com sucesso"
+    static void cadastrarCompetencia(Competencia competencia) {
+        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+        boolean sucesso = competenciaDAO.inserir(competencia)
+
+        if (sucesso) {
+            println "Competência cadastrada com sucesso"
         } else {
-            println "Erro no cadastro"
+            println "Erro no cadastro de competência"
         }
     }
 
-    static alterarCompetencia(Competencia competencia) {
-
-        boolean retornoDB
-
+    static void alterarCompetencia(Competencia competencia) {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-        retornoDB = competenciaDAO.alterar(competencia)
+        boolean sucesso = competenciaDAO.alterar(competencia)
 
-        if (retornoDB) {
+        if (sucesso) {
             println "Competência alterada com sucesso"
         } else {
-            println "Erro na alteração"
+            println "Erro na alteração de competência"
         }
     }
 
-    static deletarCompetencia(Integer id) {
-
-        boolean retornoDB
-
+    static void deletarCompetencia(Integer id) {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-        retornoDB = competenciaDAO.remover(id)
+        boolean sucesso = competenciaDAO.remover(id)
 
-        if (retornoDB) {
+        if (sucesso) {
             println "Competência deletada com sucesso"
         } else {
-            println "Erro ao tentar deletar a competência"
+            println "Erro ao deletar competência"
         }
-
     }
-
-    List<Competencia> competenciasCadastradas() {
-
-        List<Competencia> listaCompetencias
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-
-        listaCompetencias = competenciaDAO.listar()
-        return listaCompetencias
-
-    }
-
 }

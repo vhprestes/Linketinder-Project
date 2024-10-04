@@ -56,7 +56,7 @@ class ControllerVagas {
         List<Vaga> vagas = vagaService.obterVagasCadastradas()
 
         for (int i = 0; i < qtdCompetencias; i++) {
-            competenciasDB = competenciaService.competenciasCadastradas()
+            competenciasDB = competenciaService.obterCompetenciasCadastradas()
 
             println "1. Utilizar competências cadastradas.\n" +
                     "2. Cadastrar nova competência"
@@ -75,7 +75,7 @@ class ControllerVagas {
                     competencia.capitalize()
                     novaCompetencia.setCompetencia(competencia)
                     competenciaService.cadastrarCompetencia(novaCompetencia)
-                    competenciasDB = competenciaService.competenciasCadastradas()
+                    competenciasDB = competenciaService.obterCompetenciasCadastradas()
                     VagaService.cadastrarCompetenciaVaga(vagas[-1].getId(), competenciasDB[-1].getId())
                     break
                 default:
