@@ -39,9 +39,9 @@ class VagaService {
         }
     }
 
-    static void alterarVaga(Vaga vaga) {
+    static boolean alterarVaga(Vaga vaga, List<Integer> novasCompetencias) {
         VagaDAO vagaDAO = new VagaDAO()
-        boolean sucesso = vagaDAO.alterar(vaga)
+        boolean sucesso = vagaDAO.alterar(vaga, novasCompetencias)
 
         if (sucesso) {
             println "Vaga alterada com sucesso"

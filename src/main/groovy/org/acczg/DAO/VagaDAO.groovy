@@ -99,19 +99,52 @@ class VagaDAO {
         }
     }
 
-    boolean alterar(Vaga vaga) {
+    boolean alterar(Vaga vaga, List<Integer> novasCompetencias) {
         String query = "UPDATE vagas SET nome=?, descricao=?, cidade=?, empresa_id=? WHERE id=?"
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, vaga.getNome())
-            stmt.setString(2, vaga.getDescricao())
-            stmt.setString(3, vaga.getCidade())
-            stmt.setInt(4, Integer.parseInt(vaga.getEmpresa()))
-            stmt.setInt(5, vaga.getId())
-            stmt.execute()
+        String deleteCompetenciasQuery = "DELETE FROM competencias_vagas WHERE id_vagas=?"
+        String insertCompetenciaQuery = "INSERT INTO competencias_vagas(id_vagas, id_competencias) VALUES (?,?)"
+        try {
+            connection.setAutoCommit(false)
+
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmt.setString(1, vaga.getNome())
+                stmt.setString(2, vaga.getDescricao())
+                stmt.setString(3, vaga.getCidade())
+                stmt.setInt(4, Integer.parseInt(vaga.getEmpresa()))
+                stmt.setInt(5, vaga.getId())
+                stmt.execute()
+            }
+
+            try (PreparedStatement stmtDelete = connection.prepareStatement(deleteCompetenciasQuery)) {
+                stmtDelete.setInt(1, vaga.getId())
+                stmtDelete.execute()
+            }
+
+            try (PreparedStatement stmtInsert = connection.prepareStatement(insertCompetenciaQuery)) {
+                for (Integer competenciaId : novasCompetencias) {
+                    stmtInsert.setInt(1, vaga.getId())
+                    stmtInsert.setInt(2, competenciaId)
+                    stmtInsert.addBatch()
+                }
+                stmtInsert.executeBatch()
+            }
+
+            connection.commit()
             return true
         } catch (Exception e) {
             e.printStackTrace()
+            try {
+                connection.rollback()
+            } catch (Exception rollbackException) {
+                rollbackException.printStackTrace()
+            }
             return false
+        } finally {
+            try {
+                connection.setAutoCommit(true)
+            } catch (Exception e) {
+                e.printStackTrace()
+            }
         }
     }
 

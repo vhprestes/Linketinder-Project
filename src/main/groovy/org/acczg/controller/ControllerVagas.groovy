@@ -86,39 +86,71 @@ class ControllerVagas {
     }
 
     void alterarVaga() {
-
         VagaService.listarVagas()
 
         println("Escolha qual vaga você deseja alterar:")
-        this.opcao = Integer.parseInt(ler.nextLine())
+        Integer opcao = Integer.parseInt(ler.nextLine())
 
         println "Altere o nome da vaga:"
-        this.nomeVaga = ler.nextLine()
+        String nomeVaga = ler.nextLine()
 
         println "Altere a descrição da vaga:"
-        this.descricao = ler.nextLine()
+        String descricao = ler.nextLine()
 
         println "Altere a cidade da vaga:"
-        this.cidade = ler.nextLine()
+        String cidade = ler.nextLine()
 
         EmpresaService.listarEmpresas()
         println("Altere a empresa que ofertou a vaga:")
-        this.empresa = Integer.parseInt(ler.nextLine())
+        Integer empresa = Integer.parseInt(ler.nextLine())
 
-        this.novaVaga.setId(opcao)
-        this.novaVaga.setNome(this.nomeVaga)
-        this.novaVaga.setDescricao(this.descricao)
-        this.novaVaga.setCidade(this.cidade)
-        this.novaVaga.setEmpresa(this.empresa)
+        Vaga novaVaga = new Vaga()
+        novaVaga.setId(opcao)
+        novaVaga.setNome(nomeVaga)
+        novaVaga.setDescricao(descricao)
+        novaVaga.setCidade(cidade)
+        novaVaga.setEmpresa(empresa.toString())
 
-        VagaService.alterarVaga(this.novaVaga)
+        println "Digite a quantidade de competências a vaga exigirá:"
+        Integer qtdCompetencias = Integer.parseInt(ler.nextLine())
 
+        List<Integer> novasCompetencias = new ArrayList<>()
+        for (int i = 0; i < qtdCompetencias; i++) {
+            println "1. Utilizar competências cadastradas"
+            println "2. Cadastrar nova competência"
+            int num = Integer.parseInt(ler.nextLine())
+
+            switch (num) {
+                case 1:
+                    CompetenciaService.listarCompetencias()
+                    println "Selecione o id da competência ${i + 1}:"
+                    Integer idCompetencia = Integer.parseInt(ler.nextLine())
+                    novasCompetencias.add(idCompetencia)
+                    break
+                case 2:
+                    println "Digite a competência a ser cadastrada:"
+                    CompetenciaService competenciaService = new CompetenciaService()
+                    String competencia = ler.nextLine()
+                    competencia.capitalize()
+                    Competencia novaCompetencia = new Competencia()
+                    novaCompetencia.setCompetencia(competencia)
+                    CompetenciaService.cadastrarCompetencia(novaCompetencia)
+                    List<Competencia> competenciasDB = competenciaService.obterCompetenciasCadastradas()
+                    novasCompetencias.add(competenciasDB[-1].getId())
+                    break
+                default:
+                    println "Erro: opção inválida!"
+                    i-- // Decrementa o contador para repetir a iteração
+            }
+        }
+
+        VagaService.alterarVaga(novaVaga, novasCompetencias)
     }
+
 
     void deletarVaga() {
 
         VagaService.listarVagas()
-
         println("Escolha o código(id) de qual vaga você deseja deletar:")
         this.opcao = Integer.parseInt(ler.nextLine())
 
