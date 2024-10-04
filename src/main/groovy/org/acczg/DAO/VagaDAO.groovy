@@ -26,7 +26,12 @@ class VagaDAO {
     }
 
     List<Vaga> listar() {
-        String query = "SELECT * FROM vagas ORDER BY id"
+        String query = """
+            SELECT v.id, v.nome, v.descricao, v.cidade, e.nome AS empresa_nome
+            FROM vagas v
+            JOIN empresa e ON v.empresa_id = e.id
+            ORDER BY v.id
+        """
         List<Vaga> vagas = new ArrayList<>()
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet resultado = stmt.executeQuery()) {
@@ -37,14 +42,18 @@ class VagaDAO {
                 vaga.setNome(resultado.getString("nome"))
                 vaga.setDescricao(resultado.getString("descricao"))
                 vaga.setCidade(resultado.getString("cidade"))
-                vaga.setEmpresa(resultado.getString("empresa_id"))
+                vaga.setEmpresa(resultado.getString("empresa_nome"))
 
                 List<String> competencias = new ArrayList<>()
-                String queryCompetencias = "SELECT competencia " +
-                        "FROM competencias " +
-                        "WHERE id IN (SELECT id_competencias " +
-                        "FROM competencias_vagas " +
-                        "WHERE id_vagas = ?);"
+                String queryCompetencias = """
+                    SELECT c.competencia
+                    FROM competencias c
+                    WHERE c.id IN (
+                        SELECT cv.id_competencias
+                        FROM competencias_vagas cv
+                        WHERE cv.id_vagas = ?
+                    )
+                """
                 try (PreparedStatement stmtCompetencias = connection.prepareStatement(queryCompetencias)) {
                     stmtCompetencias.setInt(1, vaga.getId())
                     try (ResultSet resultadoCompetencias = stmtCompetencias.executeQuery()) {
