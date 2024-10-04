@@ -15,6 +15,7 @@ PostgreSQL 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1)
 
 ## Atenção
 [Para rodar a aplicação, é necessário instalar o groovy](https://groovy-lang.org/install.html)
+
 [Também é necessário instalar o postgresql, nesse projeto foi utilizado a versão mais recente na data do desenvolvimento](https://www.postgresql.org/download/)
 
 
