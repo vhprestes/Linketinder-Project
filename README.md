@@ -9,7 +9,9 @@ Feito por Victor Hugo S P Martins
 
 ## Tecnologias utilizadas:
 Groovy Version: 4.0.22 JVM: 1.8.0_422
-
+<br/>
+Gradle
+<br/>
 PostgreSQL 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1)
 <br/>
 
