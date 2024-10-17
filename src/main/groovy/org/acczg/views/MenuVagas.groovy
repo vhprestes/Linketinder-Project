@@ -17,6 +17,7 @@ class MenuVagas {
 
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
+            println(DivisorLinha.linha)
             println menuVaga
             String input = scanner.nextLine()
 
