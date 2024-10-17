@@ -1,9 +1,9 @@
 package org.acczg.DAO
 
+import org.acczg.connection.Connect
 import org.acczg.models.Empresa
 
 import java.sql.Connection
-import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
@@ -12,17 +12,8 @@ class EmpresaDAO {
     private Connection connection
 
     EmpresaDAO() {
-        try {
-            Properties props = new Properties()
-            props.setProperty("user", "postgres")
-            props.setProperty("password", "postgres")
-            props.setProperty("ssl", "false")
-            String URL_SERVIDOR = "jdbc:postgresql://localhost:5432/postgres"
-            this.connection = DriverManager.getConnection(URL_SERVIDOR, props)
-        } catch (Exception e) {
-            e.printStackTrace()
-            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage())
-        }
+        Connect connectInstance = new Connect()
+        this.connection = connectInstance.connect()
     }
 
     List<Empresa> listar() {
@@ -45,12 +36,12 @@ class EmpresaDAO {
                 empresas.add(empresa)
             }
         } catch (Exception e) {
-            e.printStackTrace()
+            throw new RuntimeException("Erro ao listar as empresas: " + e.getMessage(), e)
         }
         return empresas
     }
 
-    boolean inserir(Empresa empresa) {
+    void inserir(Empresa empresa) {
         String query = "INSERT INTO empresa(nome, descricao, cnpj, email, pais_id, cep, senha, estado_id) VALUES (?,?,?,?,?,?,?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, empresa.getNome())
@@ -62,14 +53,12 @@ class EmpresaDAO {
             stmt.setString(7, empresa.getSenha())
             stmt.setInt(8, Integer.parseInt(empresa.getEstado()))
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new RuntimeException("Erro ao inserir empresa: " + e.getMessage(), e)
         }
     }
 
-    boolean alterar(Empresa empresa) {
+    void alterar(Empresa empresa) {
         String query = "UPDATE empresa SET nome=?, descricao=?, cnpj=?, email=?, pais_id=?, cep=?, senha=?, estado_id=? WHERE id=?"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, empresa.getNome())
@@ -82,22 +71,18 @@ class EmpresaDAO {
             stmt.setInt(8, Integer.parseInt(empresa.getEstado()))
             stmt.setInt(9, empresa.getId())
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new RuntimeException("Erro ao alterar empresa: " + e.getMessage(), e)
         }
     }
 
-    boolean remover(Integer id) {
+    void remover(Integer id) {
         String query = "DELETE FROM empresa WHERE id=?"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id)
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new RuntimeException("Erro ao remover empresa: " + e.getMessage(), e)
         }
     }
 }
