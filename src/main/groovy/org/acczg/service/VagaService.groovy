@@ -19,45 +19,45 @@ class VagaService {
 
     static void cadastrarVaga(Vaga vaga) {
         VagaDAO vagaDAO = new VagaDAO()
-        boolean sucesso = vagaDAO.inserir(vaga)
 
-        if (sucesso) {
+        try {
+            vagaDAO.inserir(vaga)
             println "Vaga cadastrada com sucesso"
-        } else {
-            println "Erro no cadastro de vaga"
+        } catch (Exception e) {
+            throw new Exception("Erro no cadastro de vaga" + e.getMessage(), e)
         }
     }
 
     static void cadastrarCompetenciaVaga(int vagaId, int competenciaId) {
         VagaDAO vagaDAO = new VagaDAO()
-        boolean sucesso = vagaDAO.inserirCompetenciaVaga(vagaId, competenciaId)
 
-        if (sucesso) {
+        try {
+            vagaDAO.inserirCompetenciaVaga(vagaId, competenciaId)
             println "Competência cadastrada com sucesso"
-        } else {
-            println "Erro no cadastro de vaga"
+        } catch (Exception e) {
+            throw new Exception("Erro no cadastro de vaga" + e.getMessage(), e)
         }
     }
 
-    static boolean alterarVaga(Vaga vaga, List<Integer> novasCompetencias) {
+    static void alterarVaga(Vaga vaga, List<Integer> novasCompetencias) {
         VagaDAO vagaDAO = new VagaDAO()
-        boolean sucesso = vagaDAO.alterar(vaga, novasCompetencias)
 
-        if (sucesso) {
+        try {
+            vagaDAO.alterar(vaga, novasCompetencias)
             println "Vaga alterada com sucesso"
-        } else {
-            println "Erro na alteração de vaga"
+        } catch (Exception e) {
+            throw new Exception("Erro na alteração de vaga" + e.getMessage(), e)
         }
     }
 
     static void deletarVaga(Integer id) {
         VagaDAO vagaDAO = new VagaDAO()
-        boolean sucesso = vagaDAO.remover(id)
 
-        if (sucesso) {
+        try {
+            vagaDAO.remover(id)
             println "Vaga deletada com sucesso"
-        } else {
-            println "Erro ao deletar vaga"
+        } catch (Exception e) {
+            throw new Exception("Erro ao deletar vaga" + e.getMessage(), e)
         }
     }
 }
