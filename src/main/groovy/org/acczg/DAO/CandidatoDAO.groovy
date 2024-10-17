@@ -5,11 +5,9 @@ import org.acczg.models.Candidato
 
 import java.sql.Connection
 import java.sql.Date
-import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.text.SimpleDateFormat
-import java.util.Properties
 
 
 class CandidatoDAO {
@@ -58,12 +56,12 @@ class CandidatoDAO {
                 candidatos.add(candidato)
             }
         } catch (Exception e) {
-            e.printStackTrace()
+            throw new RuntimeException("Erro ao listar candidatos" + e.getMessage(), e)
         }
         return candidatos
     }
 
-    boolean inserir(Candidato candidato) {
+    void inserir(Candidato candidato) {
         String query = "INSERT INTO candidatos(nome, sobrenome, cpf, data_nascimento, email, descricao, senha, pais_id, cep, estado_id) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -82,25 +80,22 @@ class CandidatoDAO {
             stmt.setString(9, candidato.getCep())
             stmt.setInt(10, Integer.parseInt(candidato.getEstado()))
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new RuntimeException("Erro ao inserir candidato: " + e.getMessage(), e)
         }
     }
 
-    boolean inserirCompetenciaCandidato(int candidatoId, int competenciaId) {
+    void inserirCompetenciaCandidato(int candidatoId, int competenciaId) {
         String query = "INSERT INTO competencias_candidatos(id_candidato, id_competencias) VALUES (?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, candidatoId)
             stmt.setInt(2, competenciaId)
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new RuntimeException("Erro ao inserir competência do candidato: " + e.getMessage(), e)
         }
     }
+
 
     boolean alterar(Candidato candidato, List<Integer> novasCompetencias) {
         String query = "UPDATE candidatos SET nome=?, sobrenome=?, cpf=?, data_nascimento=?, email=?, descricao=?, senha=?, pais_id=?, cep=?, estado_id=? WHERE id=?"
@@ -134,7 +129,11 @@ class CandidatoDAO {
             try (PreparedStatement stmtDelete = connection.prepareStatement(deleteCompetenciasQuery)) {
                 stmtDelete.setInt(1, candidato.getId())
                 stmtDelete.execute()
+            } catch (Exception e) {
+                e.printStackTrace()
+                throw new RuntimeException("Erro ao deletar competências do candidato: " + e.getMessage(), e)
             }
+
 
             try (PreparedStatement stmtInsert = connection.prepareStatement(insertCompetenciaQuery)) {
                 for (Integer competenciaId : novasCompetencias) {
@@ -143,6 +142,9 @@ class CandidatoDAO {
                     stmtInsert.addBatch()
                 }
                 stmtInsert.executeBatch()
+            } catch (Exception e) {
+                e.printStackTrace()
+                throw new RuntimeException("Erro ao inserir competências do candidato: " + e.getMessage(), e)
             }
 
             connection.commit()
@@ -164,20 +166,17 @@ class CandidatoDAO {
         }
     }
 
-    boolean remover(Integer id) {
+    void remover(Integer id) {
         String sqlCompetencias = "DELETE FROM competencias_candidatos WHERE id_candidato=?"
         String query = "DELETE FROM candidatos WHERE id=?"
         try (PreparedStatement stmtCompetencias = connection.prepareStatement(sqlCompetencias);
              PreparedStatement stmt = connection.prepareStatement(query)) {
             stmtCompetencias.setInt(1, id)
             stmtCompetencias.execute()
-
             stmt.setInt(1, id)
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new RuntimeException("Erro ao remover candidato: " + e.getMessage(), e)
         }
     }
 }
