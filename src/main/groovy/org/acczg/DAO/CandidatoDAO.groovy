@@ -21,7 +21,7 @@ class CandidatoDAO {
     List<Candidato> listar() {
         String query = "SELECT * FROM candidatos ORDER BY id"
         List<Candidato> candidatos = new ArrayList<>()
-        try (PreparedStatement stmt = connection.prepareStatement(query);
+        try (PreparedStatement stmt = connection.prepareStatement(query)
              ResultSet resultado = stmt.executeQuery()) {
 
             while (resultado.next()) {
@@ -110,7 +110,6 @@ class CandidatoDAO {
                 java.util.Date dataUtil = formatador.parse(candidato.getDataNascimento())
                 Date dataSQL = new Date(dataUtil.getTime())
 
-
                 stmt.setString(1, candidato.getNome())
                 stmt.setString(2, candidato.getSobrenome())
                 stmt.setString(3, candidato.getCpf())
@@ -124,8 +123,6 @@ class CandidatoDAO {
                 stmt.setInt(11, candidato.getId())
                 stmt.execute()
             }
-
-
             try (PreparedStatement stmtDelete = connection.prepareStatement(deleteCompetenciasQuery)) {
                 stmtDelete.setInt(1, candidato.getId())
                 stmtDelete.execute()
@@ -133,8 +130,6 @@ class CandidatoDAO {
                 e.printStackTrace()
                 throw new RuntimeException("Erro ao deletar competências do candidato: " + e.getMessage(), e)
             }
-
-
             try (PreparedStatement stmtInsert = connection.prepareStatement(insertCompetenciaQuery)) {
                 for (Integer competenciaId : novasCompetencias) {
                     stmtInsert.setInt(1, candidato.getId())
@@ -146,7 +141,6 @@ class CandidatoDAO {
                 e.printStackTrace()
                 throw new RuntimeException("Erro ao inserir competências do candidato: " + e.getMessage(), e)
             }
-
             connection.commit()
             return true
         } catch (Exception e) {
