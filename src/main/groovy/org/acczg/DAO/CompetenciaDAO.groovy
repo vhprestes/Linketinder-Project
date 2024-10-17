@@ -18,7 +18,7 @@ class CompetenciaDAO {
     List<Competencia> listar() {
         String query = "SELECT * FROM competencias ORDER BY id"
         List<Competencia> competencias = new ArrayList<>()
-        try (PreparedStatement stmt = connection.prepareStatement(query);
+        try (PreparedStatement stmt = connection.prepareStatement(query)
              ResultSet resultado = stmt.executeQuery()) {
 
             while (resultado.next()) {
@@ -69,7 +69,6 @@ class CompetenciaDAO {
                 stmt.setInt(1, id)
                 stmt.execute()
             }
-
             connection.commit()
             return true
         } catch (Exception e) {
