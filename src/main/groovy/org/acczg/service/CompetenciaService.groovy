@@ -19,34 +19,33 @@ class CompetenciaService {
 
     static void cadastrarCompetencia(Competencia competencia) {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-        boolean sucesso = competenciaDAO.inserir(competencia)
-
-        if (sucesso) {
+        try {
+            competenciaDAO.inserir(competencia)
             println "Competência cadastrada com sucesso"
-        } else {
-            println "Erro no cadastro de competência"
+        } catch (Exception e) {
+            throw new Exception("Erro no cadastro de competência" + e.getMessage(), e )
         }
     }
 
     static void alterarCompetencia(Competencia competencia) {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-        boolean sucesso = competenciaDAO.alterar(competencia)
 
-        if (sucesso) {
+        try {
+            competenciaDAO.alterar(competencia)
             println "Competência alterada com sucesso"
-        } else {
-            println "Erro na alteração de competência"
+        } catch (Exception e) {
+            throw new Exception("Erro na alteração de competência" + e.getMessage(), e )
         }
     }
 
     static void deletarCompetencia(Integer id) {
         CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-        boolean sucesso = competenciaDAO.remover(id)
-
-        if (sucesso) {
+        try {
+            competenciaDAO.remover(id)
             println "Competência deletada com sucesso"
-        } else {
-            println "Erro ao deletar competência"
+        } catch (Exception e) {
+            throw new Exception("Erro ao deletar competência" + e.getMessage(), e )
+
         }
     }
 }
