@@ -6,7 +6,6 @@ import org.acczg.models.Candidato
 class CandidatoService {
 
     static listarCandidatos() {
-
         CandidatoDAO candidatoDAO = new CandidatoDAO()
         candidatoDAO.listar().each { candidato ->
             println candidato
@@ -14,54 +13,46 @@ class CandidatoService {
     }
 
     static cadastrarCandidato(Candidato candidato) {
-
-        boolean retornoDB
         CandidatoDAO candidatoDAO = new CandidatoDAO()
-        retornoDB = candidatoDAO.inserir(candidato)
 
-        if (retornoDB) {
-            println "Candidato cadastrada com sucesso!"
-        } else {
-            println "Erro no cadastro"
+        try {
+            candidatoDAO.inserir(candidato)
+            println "Candidato cadastrado com sucesso"
+        } catch (Exception e) {
+            println "Erro ao tentar cadastrar o candidato. Erro: ${e}"
         }
     }
 
     static cadastrarCompetenciaCandidato(int candidato_id, int competencia_id) {
-
-        boolean retornoDB
         CandidatoDAO candidatoDAO = new CandidatoDAO()
-        retornoDB = candidatoDAO.inserirCompetenciaCandidato(candidato_id, competencia_id)
 
-        if (retornoDB) {
+        try {
+            candidatoDAO.inserirCompetenciaCandidato(candidato_id, competencia_id)
             println "Competência cadastrada com sucesso"
-        } else {
-            println "Erro no cadastro da nova competência"
+        } catch (Exception e) {
+            println "Erro ao tentar cadastrar a nova competência. Erro: ${e}"
         }
     }
 
     static alterarCandidato(Candidato candidato, List<Integer> novasCompetencias) {
-
-        boolean retornoDB
         CandidatoDAO candidatoDAO = new CandidatoDAO()
-        retornoDB = candidatoDAO.alterar(candidato, novasCompetencias)
 
-        if (retornoDB) {
+        try {
+            candidatoDAO.alterar(candidato, novasCompetencias)
             println "Candidato alterado com sucesso"
-        } else {
-            println "Erro na alteração no candidato (service: alterarCandidato)"
+        } catch (Exception e) {
+            println "Erro ao tentar alterar o candidato. Erro: ${e}"
         }
     }
 
     static deletarCandidato(Integer id) {
-
-        boolean retornoDB
         CandidatoDAO candidatoDAO = new CandidatoDAO()
-        retornoDB = candidatoDAO.remover(id)
 
-        if (retornoDB) {
-            println "Candidato deletado com sucesso"
-        } else {
-            println "Erro ao tentar deletar o candidato (service: deletarCandidato)"
+        try {
+            candidatoDAO.remover(id)
+            println "Candidato removido com sucesso"
+        } catch (Exception e) {
+            println "Erro ao tentar remover o candidato. Erro: ${e}"
         }
     }
 
