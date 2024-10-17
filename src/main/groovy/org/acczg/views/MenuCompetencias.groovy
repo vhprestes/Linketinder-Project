@@ -17,6 +17,7 @@ class MenuCompetencias {
 
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
+            println(DivisorLinha.linha)
             println menuCompetencia
             String input = scanner.nextLine()
 
