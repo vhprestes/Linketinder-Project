@@ -1,9 +1,9 @@
 package org.acczg.DAO
 
+import org.acczg.connection.Connect
 import org.acczg.models.Vaga
 
 import java.sql.Connection
-import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
@@ -12,17 +12,8 @@ class VagaDAO {
     private Connection connection
 
     VagaDAO() {
-        try {
-            Properties props = new Properties()
-            props.setProperty("user", "postgres")
-            props.setProperty("password", "postgres")
-            props.setProperty("ssl", "false")
-            String URL_SERVIDOR = "jdbc:postgresql://localhost:5432/postgres"
-            this.connection = DriverManager.getConnection(URL_SERVIDOR, props)
-        } catch (Exception e) {
-            e.printStackTrace()
-            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage())
-        }
+        Connect connectInstance = new Connect()
+        this.connection = connectInstance.connect()
     }
 
     List<Vaga> listar() {
@@ -66,12 +57,12 @@ class VagaDAO {
                 vagas.add(vaga)
             }
         } catch (Exception e) {
-            e.printStackTrace()
+        throw new Exception(e.getMessage(), e)
         }
         return vagas
     }
 
-    boolean inserir(Vaga vaga) {
+    void inserir(Vaga vaga) {
         String sql = "INSERT INTO vagas(nome, descricao, cidade, empresa_id) VALUES (?,?,?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, vaga.getNome())
@@ -79,23 +70,19 @@ class VagaDAO {
             stmt.setString(3, vaga.getCidade())
             stmt.setInt(4, Integer.parseInt(vaga.getEmpresa()))
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new Exception(e.getMessage(), e)
         }
     }
 
-    boolean inserirCompetenciaVaga(int vagaId, int competenciaId) {
+    void inserirCompetenciaVaga(int vagaId, int competenciaId) {
         String query = "INSERT INTO competencias_vagas(id_vagas, id_competencias) VALUES (?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, vagaId)
             stmt.setInt(2, competenciaId)
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new Exception(e.getMessage(), e)
         }
     }
 
@@ -148,7 +135,7 @@ class VagaDAO {
         }
     }
 
-    boolean remover(Integer id) {
+    void remover(Integer id) {
         String queryCompetencias = "DELETE FROM competencias_vagas WHERE id_vagas=?"
         String query = "DELETE FROM vagas WHERE id=?"
         try (PreparedStatement stmtCompetencias = connection.prepareStatement(queryCompetencias);
@@ -157,10 +144,8 @@ class VagaDAO {
             stmtCompetencias.execute()
             stmt.setInt(1, id)
             stmt.execute()
-            return true
         } catch (Exception e) {
-            e.printStackTrace()
-            return false
+            throw new Exception(e.getMessage(), e)
         }
     }
 }
