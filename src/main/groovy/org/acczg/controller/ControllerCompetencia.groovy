@@ -16,6 +16,7 @@ class ControllerCompetencia {
         CompetenciaService.listarCompetencias()
     }
 
+
     void cadastrarCompetencia() {
 
         println("Digite a nova competência:")
