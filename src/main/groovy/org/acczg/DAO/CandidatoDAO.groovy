@@ -96,7 +96,6 @@ class CandidatoDAO {
         }
     }
 
-
     boolean alterar(Candidato candidato, List<Integer> novasCompetencias) {
         String query = "UPDATE candidatos SET nome=?, sobrenome=?, cpf=?, data_nascimento=?, email=?, descricao=?, senha=?, pais_id=?, cep=?, estado_id=? WHERE id=?"
         String deleteCompetenciasQuery = "DELETE FROM competencias_candidatos WHERE id_candidato=?"
