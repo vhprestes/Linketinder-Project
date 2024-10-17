@@ -12,41 +12,41 @@ class EmpresaService {
         }
     }
 
-    List<Empresa> obterEmpresasCadastradas() {
-        EmpresaDAO empresaDAO = new EmpresaDAO()
-        return empresaDAO.listar()
-    }
+//    List<Empresa> obterEmpresasCadastradas() {
+//        EmpresaDAO empresaDAO = new EmpresaDAO()
+//        return empresaDAO.listar()
+//    }
 
     static void cadastrarEmpresa(Empresa empresa) {
         EmpresaDAO empresaDAO = new EmpresaDAO()
-        boolean sucesso = empresaDAO.inserir(empresa)
 
-        if (sucesso) {
+        try {
+            empresaDAO.inserir(empresa)
             println "Empresa cadastrada com sucesso"
-        } else {
-            println "Erro no cadastro de empresa"
+        } catch (Exception e) {
+            println "Erro no cadastro de empresa ${e.message}"
         }
     }
 
     static void alterarEmpresa(Empresa empresa) {
         EmpresaDAO empresaDAO = new EmpresaDAO()
-        boolean sucesso = empresaDAO.alterar(empresa)
 
-        if (sucesso) {
+        try {
+            empresaDAO.alterar(empresa)
             println "Empresa alterada com sucesso"
-        } else {
-            println "Erro na alteração de empresa"
+        } catch (Exception e) {
+            println "Erro na alteração de empresa ${e.message}"
         }
     }
 
     static void deletarEmpresa(Integer id) {
         EmpresaDAO empresaDAO = new EmpresaDAO()
-        boolean sucesso = empresaDAO.remover(id)
 
-        if (sucesso) {
+        try {
+            empresaDAO.remover(id)
             println "Empresa deletada com sucesso"
-        } else {
-            println "Erro ao deletar empresa"
+        } catch (Exception e) {
+            println "Erro ao deletar empresa ${e.message}"
         }
     }
 }
