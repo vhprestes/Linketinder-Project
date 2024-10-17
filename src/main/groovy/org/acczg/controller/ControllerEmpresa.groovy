@@ -88,7 +88,7 @@ class ControllerEmpresa {
 
         println("Altere o pais:")
         println("1. Brasil")
-//       add: outros paises
+//       TODO: add: outros paises. Aqui teriamos uma nova opção para cadastrar um novo país (de uma lista)
         this.pais = Integer.parseInt(ler.nextLine())
 
         println("Altere o estado. Para isso, digite o código referente ao Estado novo:")
@@ -112,11 +112,9 @@ class ControllerEmpresa {
     }
 
     void deletarEmpresa() {
-
         EmpresaService.listarEmpresas()
         println "Escolha o código(id) da empresa a ser deletada:"
         this.opcao = Integer.parseInt(ler.nextLine())
-
         EmpresaService.deletarEmpresa(this.opcao)
     }
 
