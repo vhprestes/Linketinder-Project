@@ -17,6 +17,7 @@ class MenuEmpresas {
 
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
+            println(DivisorLinha.linha)
             println menuEmpresa
             String input = scanner.nextLine()
 
