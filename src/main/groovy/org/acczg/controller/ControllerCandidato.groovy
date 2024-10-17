@@ -31,8 +31,6 @@ class ControllerCandidato {
     }
 
     void cadastrarCandidato(){
-
-
         CompetenciaService competenciaService = new CompetenciaService()
         CandidatoService candidatoService = new CandidatoService()
         List<Competencia> competenciasDB
