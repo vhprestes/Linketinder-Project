@@ -14,14 +14,12 @@ class MenuCandidatos {
                 "3. Alterar Candidato\n" +
                 "4. Excluir Candidato\n" +
                 "0. Voltar ao menu anterior"
-
+        println(DivisorLinha.linha)
+        println (menuCandidato)
 
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
-            println menuCandidato
-//            parsa pra garantir e trata dps se der ruim
             String input = scanner.nextLine()
-
             try {
                 int opcao = Integer.parseInt(input)
 
