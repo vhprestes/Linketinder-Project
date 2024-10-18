@@ -1,101 +1,67 @@
 package org.acczg.utils
 
-import org.acczg.entities.PessoaFisica
+import org.acczg.DAO.CandidatoDAO
+import org.acczg.models.Candidato
+import org.acczg.service.CandidatoService
 import spock.lang.Specification
 
 class CandidatoUtilsTest extends Specification {
+    CandidatoDAO candidatoDAO = Mock()
+    CandidatoService candidatoService = new CandidatoService(candidatoDAO)
+    PrintStream printStream = Mock()
 
-    def "test listarCandidatos"() {
-        given:
-        List<PessoaFisica> candidatos = [
-                new PessoaFisica(nome: "João", email: "joao@email.com", descricao: "Desenvolvedor", CEP: "16600000", estado: "SP", competencias: ["Java", "Groovy"], cpf: "12345678900", idade: 30)
-        ]
-        when:
-        CandidatoUtils.listarCandidatos(candidatos)
-        then:
-        candidatos.size() == 1
-        candidatos[0].nome == "João"
-        candidatos[0].email == "joao@email.com";
-        candidatos[0].descricao == "Desenvolvedor";
-        candidatos[0].CEP == "16600000";
-        candidatos[0].estado == "SP";
-        candidatos[0].competencias == ["Java", "Groovy"];
-        candidatos[0].cpf == "12345678900";
-        candidatos[0].idade == 30;
+    def setup() {
+        System.setOut(printStream)
     }
 
-    def "test addCandidato"() {
+    def "Cadastrar Candidato should print success message"() {
         given:
-        List<PessoaFisica> candidatos = []
-        PessoaFisica newCandidato = new PessoaFisica(nome: "João", email: "joao@email.com", descricao: "Desenvolvedor", CEP: "16600000", estado: "SP", competencias: ["Java", "Groovy"], cpf: "12345678900", idade: 30)
+        Candidato candidato = new Candidato(id: 1, nome: "João", sobrenome: "Do Gás", cpf: "12345678900", dataNascimento: "01/01/2000", email: "a@b.com", descricao: "gente boa", pais: "1", estado: "17", cep: "12345678", senha: "senha")
+
         when:
-        CandidatoUtils.addCandidato(candidatos, newCandidato)
+        candidatoService.cadastrarCandidato(candidato)
+
         then:
-        candidatos.size() == 1
+        1 * candidatoDAO.inserir(candidato)
+        1 * printStream.println("Candidato cadastrado com sucesso")
     }
 
-
-    def "test getInputs do usuário"() {
+    def "CadastrarCompetenciaCandidato should print success message"() {
         given:
-        def expectedInputs = [
-                "João",
-                "joao@email.com",
-                "Desenvolvedor",
-                "16600000",
-                "SP",
-                "Java,Groovy",
-                "12345678900",
-                "30"
-        ]
-        def inputStream = new ByteArrayInputStream(expectedInputs.join("\n").getBytes())
-        System.setIn(inputStream) // Set simulated input stream
+        Integer candidatoId = 1
+        Integer competenciaId = 1
 
         when:
-        def candidato = CandidatoUtils.getInputs()
+        candidatoService.cadastrarCompetenciaCandidato(candidatoId, competenciaId)
 
         then:
-        candidato.nome == expectedInputs[0]
-        candidato.email == expectedInputs[1]
-        candidato.descricao == expectedInputs[2]
-        candidato.CEP == expectedInputs[3]
-        candidato.estado == expectedInputs[4]
-        candidato.competencias == expectedInputs[5].split(",")
-        candidato.cpf == expectedInputs[6]
-        candidato.idade == expectedInputs[7].toInteger()
+        1 * printStream.println("Competência cadastrada com sucesso")
+    }
+
+    def "Cadastrar Candidato should throw exception on failure"() {
+        given:
+        def candidato = new Candidato(id: 5, nome: "alfredo")
+
+        when:
+        candidatoService.cadastrarCandidato(candidato)
+
+        then:
+        thrown(IllegalArgumentException)
+        0 * printStream.println("Candidato cadastrado com sucesso")
+        1 * printStream.println("Erro ao tentar cadastrar o candidato. Erro: Existem campos nulos")
+
 
     }
 
-
-    def "testar cadastro de candidato"() {
+    def "deleteCandidato should print success message"() {
         given:
-        def candidatos = []
-        def inputStream = new ByteArrayInputStream(
-                "João\njoao@email.com\nDesenvolvedor\n16600000\nSP\nJava,Groovy\n121\n30".getBytes()
-        )
-        System.setIn(inputStream)
+        Integer id = 1
 
         when:
-        CandidatoUtils.cadastroCandidatos(candidatos)
+        candidatoService.deletarCandidato(id)
 
         then:
-        candidatos.size() == 1
-        candidatos[0].nome == "João"
-        candidatos[0].email == "joao@email.com"
-        candidatos[0].descricao == "Desenvolvedor"
+        1 * candidatoDAO.remover(id)
+        1 * printStream.println("Candidato removido com sucesso")
     }
-
-    def "testar se da erro quando cadastra sem dados corretos"() {
-        given:
-        def candidatos = []
-        def inputStream = new ByteArrayInputStream("João\n".getBytes())
-        System.setIn(inputStream)
-
-        when:
-        def res = CandidatoUtils.cadastroCandidatos(candidatos)
-
-        then:
-        res == null
-    }
-
-
 }
