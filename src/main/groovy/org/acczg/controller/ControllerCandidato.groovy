@@ -1,5 +1,6 @@
 package org.acczg.controller
 
+import org.acczg.DAO.CandidatoDAO
 import org.acczg.models.Candidato
 import org.acczg.models.Competencia
 import org.acczg.service.CandidatoService
@@ -24,15 +25,17 @@ class ControllerCandidato {
 
     int opcao
     Scanner ler = new Scanner(System.in)
+    CandidatoDAO candidatoDAO = new CandidatoDAO()
+    CandidatoService candidatoService = new CandidatoService(candidatoDAO)
 
 
-    static void listarCandidatos(){
-        CandidatoService.listarCandidatos()
+    void listarCandidatos(){
+        candidatoService.listarCandidatos()
     }
 
     void cadastrarCandidato(){
         CompetenciaService competenciaService = new CompetenciaService()
-        CandidatoService candidatoService = new CandidatoService()
+//        CandidatoService candidatoService = new CandidatoService()
         List<Competencia> competenciasDB
         Competencia novaCompetencia = new Competencia()
         int idCompetencia
@@ -79,7 +82,7 @@ class ControllerCandidato {
         this.novoCandidato.setEstado(this.estado)
         this.novoCandidato.setSenha(this.senha)
 
-        CandidatoService.cadastrarCandidato(this.novoCandidato)
+        candidatoService.cadastrarCandidato(this.novoCandidato)
 
         Scanner ler = new Scanner(System.in)
 
@@ -101,7 +104,7 @@ class ControllerCandidato {
                     competenciaService.listarCompetencias()
                     println "Selecione o id da competência ${i+1}:"
                     idCompetencia = Integer.parseInt(ler.nextLine())
-                    CandidatoService.cadastrarCompetenciaCandidato(candidatos[-1].getId(), idCompetencia)
+                    candidatoService.cadastrarCompetenciaCandidato(candidatos[-1].getId(), idCompetencia)
                     break
                 case 2:
                     println "Digite a competência a ser cadastrada:"
@@ -111,7 +114,7 @@ class ControllerCandidato {
                     competenciaService.cadastrarCompetencia(novaCompetencia)
                     competenciasDB = competenciaService.obterCompetenciasCadastradas()
 //                  LAST ID
-                    CandidatoService.cadastrarCompetenciaCandidato(candidatos[-1].getId(), competenciasDB[-1].getId())
+                    candidatoService.cadastrarCompetenciaCandidato(candidatos[-1].getId(), competenciasDB[-1].getId())
                     break
                 default:
                     println "Erro: opção inválida!"
@@ -121,7 +124,7 @@ class ControllerCandidato {
     }
 
     void alterarCandidato() {
-        CandidatoService.listarCandidatos()
+        candidatoService.listarCandidatos()
 
         println ("Escolha o código (id) do candidato a ser alterado:")
         this.opcao = Integer.parseInt(ler.nextLine())
@@ -204,15 +207,15 @@ class ControllerCandidato {
             }
         }
 
-        CandidatoService.alterarCandidato(novoCandidato, novasCompetencias)
+        candidatoService.alterarCandidato(novoCandidato, novasCompetencias)
     }
 
     void deletarCandidato(){
 
-        CandidatoService.listarCandidatos()
+        candidatoService.listarCandidatos()
         println "Escolha o id do candidato a ser deletado:"
         this.opcao = Integer.parseInt(ler.nextLine())
 
-        CandidatoService.deletarCandidato(this.opcao)
+        candidatoService.deletarCandidato(this.opcao)
     }
 }
