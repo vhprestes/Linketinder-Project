@@ -1,5 +1,6 @@
 package org.acczg.controller
 
+import org.acczg.DAO.EmpresaDAO
 import org.acczg.models.Empresa
 import org.acczg.service.EmpresaService
 import org.acczg.utils.Estados
@@ -18,9 +19,11 @@ class ControllerEmpresa {
 
     int opcao
     Scanner ler = new Scanner(System.in)
+    EmpresaDAO empresaDAO = new EmpresaDAO()
+    EmpresaService empresaService = new EmpresaService(empresaDAO)
 
     void listarEmpresas() {
-        EmpresaService.listarEmpresas()
+        empresaService.listarEmpresas()
     }
 
     void cadastrarEmpresa() {
@@ -59,14 +62,14 @@ class ControllerEmpresa {
         this.novaEmpresa.setEstado(this.estado)
         this.novaEmpresa.setSenha(this.senha)
 
-        EmpresaService.cadastrarEmpresa(this.novaEmpresa)
+        empresaService.cadastrarEmpresa(this.novaEmpresa)
 
     }
 
     void alterarEmpresa() {
         Scanner ler = new Scanner(System.in)
 
-        EmpresaService.listarEmpresas()
+        empresaService.listarEmpresas()
 
         println "Escolha o código(id) da empresa a ser alterada:"
         this.opcao = Integer.parseInt(ler.nextLine())
@@ -108,14 +111,14 @@ class ControllerEmpresa {
         this.novaEmpresa.setEstado(this.estado)
         this.novaEmpresa.setSenha(this.senha)
 
-        EmpresaService.alterarEmpresa(this.novaEmpresa)
+        empresaService.alterarEmpresa(this.novaEmpresa)
     }
 
     void deletarEmpresa() {
-        EmpresaService.listarEmpresas()
+        empresaService.listarEmpresas()
         println "Escolha o código(id) da empresa a ser deletada:"
         this.opcao = Integer.parseInt(ler.nextLine())
-        EmpresaService.deletarEmpresa(this.opcao)
+        empresaService.deletarEmpresa(this.opcao)
     }
 
 }

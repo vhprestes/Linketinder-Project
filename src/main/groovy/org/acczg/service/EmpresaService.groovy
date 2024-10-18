@@ -5,21 +5,19 @@ import org.acczg.models.Empresa
 
 class EmpresaService {
 
-    static void listarEmpresas() {
-        EmpresaDAO empresaDAO = new EmpresaDAO()
+    private EmpresaDAO empresaDAO
+
+    EmpresaService(EmpresaDAO empresaDAO) {
+        this.empresaDAO = empresaDAO
+    }
+
+    void listarEmpresas() {
         empresaDAO.listar().each { empresa ->
             println empresa.toString()
         }
     }
 
-//    List<Empresa> obterEmpresasCadastradas() {
-//        EmpresaDAO empresaDAO = new EmpresaDAO()
-//        return empresaDAO.listar()
-//    }
-
-    static void cadastrarEmpresa(Empresa empresa) {
-        EmpresaDAO empresaDAO = new EmpresaDAO()
-
+    void cadastrarEmpresa(Empresa empresa) {
         try {
             empresaDAO.inserir(empresa)
             println "Empresa cadastrada com sucesso"
@@ -28,9 +26,7 @@ class EmpresaService {
         }
     }
 
-    static void alterarEmpresa(Empresa empresa) {
-        EmpresaDAO empresaDAO = new EmpresaDAO()
-
+    void alterarEmpresa(Empresa empresa) {
         try {
             empresaDAO.alterar(empresa)
             println "Empresa alterada com sucesso"
@@ -39,14 +35,14 @@ class EmpresaService {
         }
     }
 
-    static void deletarEmpresa(Integer id) {
-        EmpresaDAO empresaDAO = new EmpresaDAO()
-
+    void deletarEmpresa(Integer id) {
         try {
             empresaDAO.remover(id)
             println "Empresa deletada com sucesso"
         } catch (Exception e) {
             println "Erro ao deletar empresa ${e.message}"
+            throw e
         }
     }
+
 }
