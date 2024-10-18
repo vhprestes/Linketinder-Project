@@ -34,7 +34,6 @@ static void main(String[] args) {
                 break
         }
     }
-
 }
 
 void menu() {
