@@ -1,6 +1,7 @@
 package org.acczg.views.UI
 
 import org.acczg.controller.EmpresaController
+import org.acczg.factory.EntityFactory
 import org.acczg.models.Empresa
 import org.acczg.utils.Estados
 
@@ -13,36 +14,40 @@ class EmpresaView {
         controllerEmpresa.listarEmpresas()
     }
 
-    void cadastrarEmpresa() {
-        Empresa novaEmpresa = new Empresa()
 
+    Empresa criarEmpresa() {
         println("Digite o nome da empresa:")
-        novaEmpresa.setNome(ler.nextLine())
+        String nome = ler.nextLine()
 
         println("Digite o CNPJ da empresa:")
-        novaEmpresa.setCnpj(ler.nextLine())
+        String cnpj = ler.nextLine()
 
         println("Digite o email da empresa:")
-        novaEmpresa.setEmail(ler.nextLine())
+        String email = ler.nextLine()
 
         println("Digite o CEP da empresa:")
-        novaEmpresa.setCep(ler.nextLine())
+        String cep = ler.nextLine()
 
         println("Faça uma descrição da empresa:")
-        novaEmpresa.setDescricao(ler.nextLine())
+        String descricao = ler.nextLine()
 
         println("Altere o país:\n1. Brasil")
         String pais = Integer.parseInt(ler.nextLine())
-        novaEmpresa.setPais(pais)
+
 
         println("Altere o estado:")
         println(Estados.estados)
         String estado = Integer.parseInt(ler.nextLine())
-        novaEmpresa.setEstado(estado)
 
         println("Digite uma senha:")
-        novaEmpresa.setSenha(ler.nextLine())
+        String senha = ler.nextLine()
 
+        Empresa novaEmpresa = EntityFactory.createEmpresa(nome, cnpj, email, senha, pais, estado, cep, descricao)
+        return novaEmpresa
+    }
+
+    void cadastrarEmpresa() {
+        Empresa novaEmpresa = criarEmpresa()
         controllerEmpresa.cadastrarEmpresa(novaEmpresa)
     }
 
@@ -51,37 +56,8 @@ class EmpresaView {
 
         println("Escolha o código (id) da empresa a ser alterada:")
         int id = Integer.parseInt(ler.nextLine())
-
-        Empresa empresa = new Empresa()
+        Empresa empresa = criarEmpresa()
         empresa.setId(id)
-
-        println("Altere o nome da empresa:")
-        empresa.setNome(ler.nextLine())
-
-        println("Altere o CNPJ da empresa:")
-        empresa.setCnpj(ler.nextLine())
-
-        println("Altere o email da empresa:")
-        empresa.setEmail(ler.nextLine())
-
-        println("Altere o CEP da empresa:")
-        empresa.setCep(ler.nextLine())
-
-        println("Altere a descrição da empresa:")
-        empresa.setDescricao(ler.nextLine())
-
-        println("Altere o país:\n1. Brasil")
-        String pais = Integer.parseInt(ler.nextLine())
-        empresa.setPais(pais)
-
-        println("Altere o estado:")
-        println(Estados.estados)
-        String estado = Integer.parseInt(ler.nextLine())
-        empresa.setEstado(estado)
-
-        println("Altere a senha:")
-        empresa.setSenha(ler.nextLine())
-
         controllerEmpresa.alterarEmpresa(empresa)
     }
 
