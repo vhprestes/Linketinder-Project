@@ -1,12 +1,12 @@
-package org.acczg.views
+package org.acczg.views.menus
 
-import org.acczg.controller.ControllerVagas
 import org.acczg.utils.DivisorLinha
+import org.acczg.views.UI.VagaView
 
 class MenuVagas {
 
-    static boolean menuVaga() {
-        ControllerVagas controllerVaga = new ControllerVagas()
+    static menuVaga() {
+        VagaView vagaView = new VagaView()
         Boolean menuON = true
         String menuVaga = "Por favor escolha uma opção:\n" +
                 "1. Listar Vagas\n" +
@@ -18,9 +18,8 @@ class MenuVagas {
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
             println(DivisorLinha.linha)
-            println menuVaga
+            println(menuVaga)
             String input = scanner.nextLine()
-
             try {
                 int opcao = Integer.parseInt(input)
 
@@ -29,22 +28,22 @@ class MenuVagas {
                         menuON = false
                         break
                     case 1:
-                        controllerVaga.listarVagas()
+                        vagaView.listarVagas()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 2:
-                        controllerVaga.cadastrarVaga()
+                        vagaView.cadastrarVaga()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 3:
-                        controllerVaga.alterarVaga()
+                        vagaView.alterarVaga()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 4:
-                        controllerVaga.deletarVaga()
+                        vagaView.deletarVaga()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
@@ -53,12 +52,13 @@ class MenuVagas {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                System.err.println("Erro: entrada inválida! Por favor, insira um número.")
+                if (opcao == 0) {
+                    break
+                }
+
             } catch (IOException e) {
                 System.err.println("Erro no menu vagas: " + e.getMessage())
             }
         }
-        return menuON
     }
 }

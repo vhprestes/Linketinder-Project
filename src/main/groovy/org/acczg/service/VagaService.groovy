@@ -5,21 +5,24 @@ import org.acczg.models.Vaga
 
 class VagaService {
 
-    static void listarVagas() {
-        VagaDAO vagaDAO = new VagaDAO()
+    private VagaDAO vagaDAO
+
+    VagaService(VagaDAO vagaDAO) {
+        this.vagaDAO = vagaDAO
+    }
+
+
+    void listarVagas() {
         vagaDAO.listar().each { vaga ->
             println vaga.toString()
         }
     }
 
     List<Vaga> obterVagasCadastradas() {
-        VagaDAO vagaDAO = new VagaDAO()
         return vagaDAO.listar()
     }
 
-    static void cadastrarVaga(Vaga vaga) {
-        VagaDAO vagaDAO = new VagaDAO()
-
+    void cadastrarVaga(Vaga vaga) {
         try {
             vagaDAO.inserir(vaga)
             println "Vaga cadastrada com sucesso"
@@ -28,9 +31,7 @@ class VagaService {
         }
     }
 
-    static void cadastrarCompetenciaVaga(int vagaId, int competenciaId) {
-        VagaDAO vagaDAO = new VagaDAO()
-
+    void cadastrarCompetenciaVaga(int vagaId, int competenciaId) {
         try {
             vagaDAO.inserirCompetenciaVaga(vagaId, competenciaId)
             println "Competência cadastrada com sucesso"
@@ -39,9 +40,7 @@ class VagaService {
         }
     }
 
-    static void alterarVaga(Vaga vaga, List<Integer> novasCompetencias) {
-        VagaDAO vagaDAO = new VagaDAO()
-
+    void alterarVaga(Vaga vaga, List<Integer> novasCompetencias) {
         try {
             vagaDAO.alterar(vaga, novasCompetencias)
             println "Vaga alterada com sucesso"
@@ -50,9 +49,7 @@ class VagaService {
         }
     }
 
-    static void deletarVaga(Integer id) {
-        VagaDAO vagaDAO = new VagaDAO()
-
+    void deletarVaga(Integer id) {
         try {
             vagaDAO.remover(id)
             println "Vaga deletada com sucesso"
