@@ -4,7 +4,7 @@ import org.acczg.models.Competencia
 import org.acczg.service.CompetenciaService
 
 
-class ControllerCompetencia {
+class CompetenciaController {
 
     Competencia competencia = new Competencia()
     String novaCompetencia = ""
