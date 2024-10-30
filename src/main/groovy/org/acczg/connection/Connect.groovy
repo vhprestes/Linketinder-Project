@@ -5,9 +5,10 @@ import java.sql.Connection
 
 class Connect {
 
+    private static Connect instance
     private Connection connection
 
-    Connection connect() {
+    private Connect() {
         try {
             Properties props = new Properties()
             props.setProperty("user", "postgres")
@@ -19,6 +20,20 @@ class Connect {
             e.printStackTrace()
             System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage())
         }
-        return this.connection
+    }
+
+    static Connect getInstance() {
+        if (instance == null) {
+            synchronized (Connect.class) {
+                if (instance == null) {
+                    instance = new Connect()
+                }
+            }
+        }
+        return instance
+    }
+
+    Connection connect() {
+        return connection
     }
 }

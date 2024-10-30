@@ -14,8 +14,7 @@ class CandidatoDAO {
     private Connection connection
 
     CandidatoDAO() {
-        Connect connectInstance = new Connect()
-        this.connection = connectInstance.connect()
+        this.connection = Connect.getInstance().connect()
     }
 
     List<Candidato> listar() {

@@ -12,8 +12,7 @@ class EmpresaDAO {
     private Connection connection
 
     EmpresaDAO() {
-        Connect connectInstance = new Connect()
-        this.connection = connectInstance.connect()
+        this.connection = Connect.getInstance().connect()
     }
 
     List<Empresa> listar() {

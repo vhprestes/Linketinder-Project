@@ -12,8 +12,7 @@ class VagaDAO {
     private Connection connection
 
     VagaDAO() {
-        Connect connectInstance = new Connect()
-        this.connection = connectInstance.connect()
+        this.connection = Connect.getInstance().connect()
     }
 
     List<Vaga> listar() {

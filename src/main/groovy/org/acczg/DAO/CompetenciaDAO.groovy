@@ -11,8 +11,7 @@ class CompetenciaDAO {
     private Connection connection
 
     CompetenciaDAO() {
-        Connect connectInstance = new Connect()
-        this.connection = connectInstance.connect()
+        this.connection = Connect.getInstance().connect()
     }
 
     List<Competencia> listar() {
