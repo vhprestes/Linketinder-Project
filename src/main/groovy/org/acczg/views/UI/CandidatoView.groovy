@@ -1,6 +1,8 @@
 package org.acczg.views.UI
 
+import org.acczg.DAO.CompetenciaDAO
 import org.acczg.controller.CandidatoController
+import org.acczg.factory.EntityFactory
 import org.acczg.models.Candidato
 import org.acczg.utils.Estados
 
@@ -13,49 +15,58 @@ class CandidatoView {
         controllerCandidato.listarCandidatos()
     }
 
-    void cadastrarCandidato() {
-        Candidato novoCandidato = new Candidato()
 
+    List<String> novoCandidato() {
         println("Digite o nome do candidato:")
-        novoCandidato.setNome(ler.nextLine())
+        String nome = ler.nextLine()
 
         println("Digite o sobrenome do candidato:")
-        novoCandidato.setSobrenome(ler.nextLine())
+        String sobrenome = ler.nextLine()
 
         println("Digite o cpf do candidato:")
-        novoCandidato.setCpf(ler.nextLine())
+        String cpf = ler.nextLine()
 
         println("Digite a data de nascimento do candidato no formato dd/MM/yyyy:")
-        novoCandidato.setDataNascimento(ler.nextLine())
+        String dataNascimento = ler.nextLine()
 
         println("Digite o email do candidato:")
-        novoCandidato.setEmail(ler.nextLine())
+        String email = ler.nextLine()
 
         println("Digite o cep do candidato:")
-        novoCandidato.setCep(ler.nextLine())
+        String cep = ler.nextLine()
 
         println("Faça uma descrição do candidato:")
-        novoCandidato.setDescricao(ler.nextLine())
+        String descricao = ler.nextLine()
 
         println("Selecione o país:\n1. Brasil")
-        novoCandidato.setPais(Integer.parseInt(ler.nextLine()))
+        String pais = Integer.parseInt(ler.nextLine())
 
         println("Selecione o estado:")
         println(Estados.estados)
-        novoCandidato.setEstado(Integer.parseInt(ler.nextLine()))
+        String estado = Integer.parseInt(ler.nextLine())
 
         println("Digite uma senha:")
-        novoCandidato.setSenha(ler.nextLine())
+        String senha = ler.nextLine()
 
-        controllerCandidato.cadastrarCandidato(novoCandidato)
+        return [nome, sobrenome, cpf, dataNascimento, email, cep, descricao, pais, estado, senha]
 
+    }
+
+    void cadastrarCandidato() {
+        List<String> dados = novoCandidato()
+
+        List<String> competencias = new ArrayList<>()
         println "Digite quantas competências o candidato possui:"
         int qtdCompetencias = Integer.parseInt(ler.nextLine())
+
+
+        Candidato novoCandidato = EntityFactory.createCandidato(dados[0], dados[1], dados[2], dados[3], dados[4], dados[9], dados[7], dados[8], dados[5], dados[6], new ArrayList<>())
 
         for (int i = 0; i < qtdCompetencias; i++) {
             println "1. Utilizar competências cadastradas"
             println "2. Cadastrar nova competência"
             int opcao = Integer.parseInt(ler.nextLine())
+
 
             switch (opcao) {
                 case 1:
@@ -73,6 +84,12 @@ class CandidatoView {
                     println "Erro: opção inválida!"
             }
         }
+
+        controllerCandidato.cadastrarCandidato(novoCandidato)
+
+        for (String competencia : competencias) {
+            controllerCandidato.cadastrarNovaCompetencia(novoCandidato.getId(), competencia)
+        }
     }
 
     void alterarCandidato() {
@@ -80,45 +97,12 @@ class CandidatoView {
 
         println("Escolha o código (id) do candidato a ser alterado:")
         int id = Integer.parseInt(ler.nextLine())
+        List dados = novoCandidato()
 
-        Candidato candidato = new Candidato()
-        candidato.setId(id)
-
-        println("Altere o nome do candidato:")
-        candidato.setNome(ler.nextLine())
-
-        println("Altere o sobrenome do candidato:")
-        candidato.setSobrenome(ler.nextLine())
-
-        println("Altere o cpf do candidato:")
-        candidato.setCpf(ler.nextLine())
-
-        println("Altere a data de nascimento do candidato no formato dd/MM/yyyy:")
-        candidato.setDataNascimento(ler.nextLine())
-
-        println("Altere o email do candidato:")
-        candidato.setEmail(ler.nextLine())
-
-        println("Altere o cep do candidato:")
-        candidato.setCep(ler.nextLine())
-
-        println("Altere a descrição do candidato:")
-        candidato.setDescricao(ler.nextLine())
-
-        println("Altere o país:\n1. Brasil")
-        candidato.setPais(Integer.parseInt(ler.nextLine()))
-
-        println("Altere o estado:")
-        println(Estados.estados)
-        candidato.setEstado(Integer.parseInt(ler.nextLine()))
-
-        println("Altere a senha:")
-        candidato.setSenha(ler.nextLine())
-
+        List<Integer> novasCompetencias = new ArrayList<>()
         println "Digite a quantidade de competências que o candidato terá:"
         int qtdCompetencias = Integer.parseInt(ler.nextLine())
 
-        List<Integer> novasCompetencias = new ArrayList<>()
         for (int i = 0; i < qtdCompetencias; i++) {
             println "1. Utilizar competências cadastradas"
             println "2. Cadastrar nova competência"
@@ -134,7 +118,7 @@ class CandidatoView {
                 case 2:
                     println "Digite a competência a ser cadastrada:"
                     String competencia = ler.nextLine()
-                    controllerCandidato.cadastrarNovaCompetencia(candidato.getId(), competencia)
+                    controllerCandidato.cadastrarNovaCompetencia(id, competencia)
                     break
                 default:
                     println "Erro: opção inválida!"
@@ -142,6 +126,8 @@ class CandidatoView {
             }
         }
 
+        Candidato candidato = EntityFactory.createCandidato(dados[0], dados[1], dados[2], dados[3], dados[4], dados[9], dados[7], dados[8], dados[5], dados[6], new ArrayList<>())
+        candidato.setId(id)
         controllerCandidato.alterarCandidato(candidato, novasCompetencias)
     }
 
