@@ -1,6 +1,7 @@
 package org.acczg.controller
 
 import org.acczg.DAO.CandidatoDAO
+import org.acczg.DAO.CompetenciaDAO
 import org.acczg.models.Candidato
 import org.acczg.models.Competencia
 import org.acczg.service.CandidatoService
@@ -13,8 +14,9 @@ class CandidatoController {
 
     CandidatoController() {
         CandidatoDAO candidatoDAO = new CandidatoDAO()
+        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
         this.candidatoService = new CandidatoService(candidatoDAO)
-        this.competenciaService = new CompetenciaService()
+        this.competenciaService = new CompetenciaService(competenciaDAO)
     }
 
     void listarCandidatos() {
