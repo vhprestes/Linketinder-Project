@@ -6,7 +6,7 @@ import org.acczg.service.CompetenciaService
 import org.acczg.service.EmpresaService
 import org.acczg.service.VagaService
 
-class ControllerVagas {
+class VagasController {
     private Vaga novaVaga = new Vaga()
     private String nomeVaga
     private String descricao
