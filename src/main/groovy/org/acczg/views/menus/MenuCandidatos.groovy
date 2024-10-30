@@ -1,12 +1,13 @@
-package org.acczg.views
+package org.acczg.views.menus
 
-import org.acczg.controller.ControllerCandidato
+
 import org.acczg.utils.DivisorLinha
+import org.acczg.views.UI.CandidatoView
 
 class MenuCandidatos {
 
     static menuCandidato() {
-        ControllerCandidato controllerCandidato = new ControllerCandidato()
+        CandidatoView candidatoView = new CandidatoView()
         Boolean menuON = true
         String menuCandidato = "Por favor escolha uma opção:\n" +
                 "1. Listar Candidatos\n" +
@@ -29,22 +30,22 @@ class MenuCandidatos {
                         menuON = false
                         break
                     case 1:
-                        controllerCandidato.listarCandidatos()
+                        candidatoView.listarCandidatos()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 2:
-                        controllerCandidato.cadastrarCandidato()
+                        candidatoView.cadastrarCandidato()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 3:
-                        controllerCandidato.alterarCandidato()
+                        candidatoView.alterarCandidato()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 4:
-                        controllerCandidato.deletarCandidato()
+                        candidatoView.deletarCandidato()
                         println(DivisorLinha.linha)
                         menuON = false
                         break

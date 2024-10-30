@@ -1,10 +1,10 @@
 package org.acczg
 
 
-import org.acczg.views.MenuCandidatos
-import org.acczg.views.MenuCompetencias
-import org.acczg.views.MenuEmpresas
-import org.acczg.views.MenuVagas
+import org.acczg.views.menus.MenuCandidatos
+import org.acczg.views.menus.MenuCompetencias
+import org.acczg.views.menus.MenuEmpresas
+import org.acczg.views.menus.MenuVagas
 
 static void main(String[] args) {
 
