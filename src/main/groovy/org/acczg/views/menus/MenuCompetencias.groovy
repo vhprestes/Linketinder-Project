@@ -1,12 +1,12 @@
-package org.acczg.views
+package org.acczg.views.menus
 
-import org.acczg.controller.ControllerCompetencia
 import org.acczg.utils.DivisorLinha
+import org.acczg.views.UI.CompetenciaView
 
 class MenuCompetencias {
 
-    static boolean menuCompetencia() {
-        ControllerCompetencia controllerCompetencia = new ControllerCompetencia()
+    static menuCompetencia() {
+        CompetenciaView competenciaView = new CompetenciaView()
         Boolean menuON = true
         String menuCompetencia = "Por favor escolha uma opção:\n" +
                 "1. Listar Competências\n" +
@@ -18,9 +18,8 @@ class MenuCompetencias {
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
             println(DivisorLinha.linha)
-            println menuCompetencia
+            println(menuCompetencia)
             String input = scanner.nextLine()
-
             try {
                 int opcao = Integer.parseInt(input)
 
@@ -29,22 +28,22 @@ class MenuCompetencias {
                         menuON = false
                         break
                     case 1:
-                        controllerCompetencia.listarCompetencias()
+                        competenciaView.listarCompetencias()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 2:
-                        controllerCompetencia.cadastrarCompetencia()
+                        competenciaView.cadastrarCompetencia()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 3:
-                        controllerCompetencia.alterarCompetencia()
+                        competenciaView.alterarCompetencia()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 4:
-                        controllerCompetencia.deletarCompetencia()
+                        competenciaView.deletarCompetencia()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
@@ -53,12 +52,13 @@ class MenuCompetencias {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                System.err.println("Erro: entrada inválida! Por favor, insira um número.")
+                if (opcao == 0) {
+                    break
+                }
+
             } catch (IOException e) {
                 System.err.println("Erro no menu competências: " + e.getMessage())
             }
         }
-        return menuON
     }
 }

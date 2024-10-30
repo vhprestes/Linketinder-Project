@@ -1,54 +1,31 @@
 package org.acczg.controller
 
+import org.acczg.DAO.CompetenciaDAO
 import org.acczg.models.Competencia
 import org.acczg.service.CompetenciaService
 
 
 class CompetenciaController {
+    private CompetenciaService competenciaService
 
-    Competencia competencia = new Competencia()
-    String novaCompetencia = ""
-
-    int opcao
-    Scanner ler = new Scanner(System.in)
+    CompetenciaController() {
+        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+        this.competenciaService = new CompetenciaService(competenciaDAO)
+    }
 
     void listarCompetencias() {
-        CompetenciaService.listarCompetencias()
+        competenciaService.listarCompetencias()
     }
 
-
-    void cadastrarCompetencia() {
-
-        println("Digite a nova competência:")
-        this.novaCompetencia = ler.nextLine()
-
-        this.competencia.setCompetencia(this.novaCompetencia)
-        CompetenciaService.cadastrarCompetencia(this.competencia)
-
+    void cadastrarCompetencia(Competencia competencia) {
+        competenciaService.cadastrarCompetencia(competencia)
     }
 
-    void alterarCompetencia() {
-
-        CompetenciaService.listarCompetencias()
-
-        println "Escolha o código(id) da competência que deseja alterar:"
-        this.opcao = Integer.parseInt(ler.nextLine())
-
-        println("Digite a nova competência:")
-        this.novaCompetencia = ler.nextLine()
-
-        this.competencia.setId(this.opcao)
-        this.competencia.setCompetencia(this.novaCompetencia)
-        CompetenciaService.alterarCompetencia(this.competencia)
-
+    void alterarCompetencia(Competencia competencia) {
+        competenciaService.alterarCompetencia(competencia)
     }
 
-    void deletarCompetencia() {
-
-        CompetenciaService.listarCompetencias()
-
-        println("Escolha o código(id) da competência que deseja excluir:")
-        this.opcao = Integer.parseInt(ler.nextLine())
-        CompetenciaService.deletarCompetencia(this.opcao)
+    void deletarCompetencia(int id) {
+        competenciaService.deletarCompetencia(id)
     }
 }

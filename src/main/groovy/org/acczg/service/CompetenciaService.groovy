@@ -5,20 +5,23 @@ import org.acczg.models.Competencia
 
 class CompetenciaService {
 
-    static void listarCompetencias() {
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+    private CompetenciaDAO competenciaDAO
+
+    CompetenciaService(CompetenciaDAO competenciaDAO) {
+        this.competenciaDAO = competenciaDAO
+    }
+
+    void listarCompetencias() {
         competenciaDAO.listar().each { competencia ->
             println competencia.toString()
         }
     }
 
     List<Competencia> obterCompetenciasCadastradas() {
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
         return competenciaDAO.listar()
     }
 
-    static void cadastrarCompetencia(Competencia competencia) {
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+    void cadastrarCompetencia(Competencia competencia) {
         try {
             competenciaDAO.inserir(competencia)
             println "Competência cadastrada com sucesso"
@@ -27,9 +30,7 @@ class CompetenciaService {
         }
     }
 
-    static void alterarCompetencia(Competencia competencia) {
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
-
+    void alterarCompetencia(Competencia competencia) {
         try {
             competenciaDAO.alterar(competencia)
             println "Competência alterada com sucesso"
@@ -38,8 +39,7 @@ class CompetenciaService {
         }
     }
 
-    static void deletarCompetencia(Integer id) {
-        CompetenciaDAO competenciaDAO = new CompetenciaDAO()
+    void deletarCompetencia(Integer id) {
         try {
             competenciaDAO.remover(id)
             println "Competência deletada com sucesso"
