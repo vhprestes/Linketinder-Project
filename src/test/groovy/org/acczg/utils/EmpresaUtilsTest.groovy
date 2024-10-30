@@ -35,6 +35,7 @@ class EmpresaUtilsTest extends Specification {
 
         then:
         0 * printStream.println("Empresa cadastrada com sucesso")
+        1 * printStream.println("Erro no cadastro de empresa Empresa não pode ser nula")
     }
 
     def "Alterar Empresa should print success message"() {

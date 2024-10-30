@@ -1,12 +1,12 @@
-package org.acczg.views
+package org.acczg.views.menus
 
-import org.acczg.controller.ControllerEmpresa
 import org.acczg.utils.DivisorLinha
+import org.acczg.views.UI.EmpresaView
 
 class MenuEmpresas {
 
-    static boolean menuEmpresa() {
-        ControllerEmpresa controllerEmpresa = new ControllerEmpresa()
+    static menuEmpresa() {
+        EmpresaView empresaView = new EmpresaView()
         Boolean menuON = true
         String menuEmpresa = "Por favor escolha uma opção:\n" +
                 "1. Listar Empresas\n" +
@@ -18,9 +18,8 @@ class MenuEmpresas {
         Scanner scanner = new Scanner(System.in)
         while (menuON) {
             println(DivisorLinha.linha)
-            println menuEmpresa
+            println(menuEmpresa)
             String input = scanner.nextLine()
-
             try {
                 int opcao = Integer.parseInt(input)
 
@@ -29,22 +28,22 @@ class MenuEmpresas {
                         menuON = false
                         break
                     case 1:
-                        controllerEmpresa.listarEmpresas()
+                        empresaView.listarEmpresas()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 2:
-                        controllerEmpresa.cadastrarEmpresa()
+                        empresaView.cadastrarEmpresa()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 3:
-                        controllerEmpresa.alterarEmpresa()
+                        empresaView.alterarEmpresa()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
                     case 4:
-                        controllerEmpresa.deletarEmpresa()
+                        empresaView.deletarEmpresa()
                         println(DivisorLinha.linha)
                         menuON = false
                         break
@@ -53,12 +52,13 @@ class MenuEmpresas {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                System.err.println("Erro: entrada inválida! Por favor, insira um número.")
+                if (opcao == 0) {
+                    break
+                }
+
             } catch (IOException e) {
                 System.err.println("Erro no menu empresas: " + e.getMessage())
             }
         }
-        return menuON
     }
 }

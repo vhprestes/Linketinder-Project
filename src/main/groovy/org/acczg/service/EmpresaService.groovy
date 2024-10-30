@@ -19,6 +19,9 @@ class EmpresaService {
 
     void cadastrarEmpresa(Empresa empresa) {
         try {
+            if (empresa == null) {
+                throw new Exception("Empresa não pode ser nula")
+            }
             empresaDAO.inserir(empresa)
             println "Empresa cadastrada com sucesso"
         } catch (Exception e) {
