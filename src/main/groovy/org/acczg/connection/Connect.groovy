@@ -15,6 +15,8 @@ class Connect {
             props.setProperty("password", "postgres")
             props.setProperty("ssl", "false")
             String URL_SERVIDOR = "jdbc:postgresql://localhost:5432/postgres"
+//            class.forName
+            Class.forName("org.postgresql.Driver")
             this.connection = DriverManager.getConnection(URL_SERVIDOR, props)
         } catch (Exception e) {
             e.printStackTrace()
