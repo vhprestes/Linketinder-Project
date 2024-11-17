@@ -56,12 +56,12 @@ class VagaDAO {
                 vagas.add(vaga)
             }
         } catch (Exception e) {
-        throw new Exception(e.getMessage(), e)
+            throw new Exception(e.getMessage(), e)
         }
         return vagas
     }
 
-    void inserir(Vaga vaga) {
+    boolean inserir(Vaga vaga) {
         String sql = "INSERT INTO vagas(nome, descricao, cidade, empresa_id) VALUES (?,?,?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, vaga.getNome())
@@ -69,8 +69,10 @@ class VagaDAO {
             stmt.setString(3, vaga.getCidade())
             stmt.setInt(4, Integer.parseInt(vaga.getEmpresa()))
             stmt.execute()
+            return true
         } catch (Exception e) {
             throw new Exception(e.getMessage(), e)
+            return false
         }
     }
 
@@ -145,6 +147,20 @@ class VagaDAO {
             stmt.execute()
         } catch (Exception e) {
             throw new Exception(e.getMessage(), e)
+        }
+    }
+
+    Integer obterVagaId() {
+        String sql = "SELECT id FROM vagas ORDER BY id DESC LIMIT 1"
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql)
+            ResultSet resultado = stmt.executeQuery()
+            if (resultado.next()) {
+                return resultado.getInt("id")
+            }
+        } catch (Exception e) {
+            e.printStackTrace()
+            return null
         }
     }
 }
