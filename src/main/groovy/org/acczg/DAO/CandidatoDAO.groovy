@@ -60,7 +60,7 @@ class CandidatoDAO {
         return candidatos
     }
 
-    void inserir(Candidato candidato) {
+    boolean inserir(Candidato candidato) {
         String query = "INSERT INTO candidatos(nome, sobrenome, cpf, data_nascimento, email, descricao, senha, pais_id, cep, estado_id) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -79,19 +79,23 @@ class CandidatoDAO {
             stmt.setString(9, candidato.getCep())
             stmt.setInt(10, Integer.parseInt(candidato.getEstado()))
             stmt.execute()
+            return true
         } catch (Exception e) {
             throw new RuntimeException("Erro ao inserir candidato: " + e.getMessage(), e)
+            return false
         }
     }
 
-    void inserirCompetenciaCandidato(int candidatoId, int competenciaId) {
+    boolean inserirCompetenciaCandidato(int candidatoId, int competenciaId) {
         String query = "INSERT INTO competencias_candidatos(id_candidato, id_competencias) VALUES (?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, candidatoId)
             stmt.setInt(2, competenciaId)
             stmt.execute()
+            return true
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao inserir competência do candidato: " + e.getMessage(), e)
+            e.printStackTrace()
+            return false
         }
     }
 
@@ -169,6 +173,20 @@ class CandidatoDAO {
             stmt.execute()
         } catch (Exception e) {
             throw new RuntimeException("Erro ao remover candidato: " + e.getMessage(), e)
+        }
+    }
+
+    Integer obterCandidatoId() {
+        String sql = "SELECT id FROM candidatos ORDER BY id DESC LIMIT 1"
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql)
+            ResultSet resultado = stmt.executeQuery()
+            if (resultado.next()) {
+                return resultado.getInt("id")
+            }
+        } catch (Exception e) {
+            e.printStackTrace()
+            return null
         }
     }
 }
