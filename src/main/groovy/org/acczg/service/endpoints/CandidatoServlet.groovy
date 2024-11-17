@@ -24,11 +24,8 @@ class CandidatoServlet extends HttpServlet {
             Candidato candidato = gson.fromJson(request.getReader(), Candidato)
             this.retornoDB = this.candidatoDAO.inserir(candidato)
             List<String> competencias = candidato.getCompetencias()
-            println("Competencias que vieram: " + competencias)
-            println("Retorno do banco: " + retornoDB)
             if (retornoDB) {
                 Integer idCandidato = this.candidatoDAO.obterCandidatoId()
-                println("ID do candidato inserido: " + idCandidato)
                 for (String competencia : competencias) {
                     Integer comp = Integer.parseInt(competencia)
                     boolean inserido = this.candidatoDAO.inserirCompetenciaCandidato(idCandidato, comp)
@@ -55,7 +52,6 @@ class CandidatoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            print("GET")
             List<Candidato> candidatos = this.candidatoDAO.listar()
             response.setStatus(HttpServletResponse.SC_OK)
             response.getWriter().write(gson.toJson(candidatos))
