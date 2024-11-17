@@ -9,6 +9,9 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+war {
+    archiveFileName = 'app.war'
+}
 
 dependencies {
     implementation 'org.apache.groovy:groovy:4.0.14'
