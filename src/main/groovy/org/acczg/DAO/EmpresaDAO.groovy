@@ -40,7 +40,7 @@ class EmpresaDAO {
         return empresas
     }
 
-    void inserir(Empresa empresa) {
+    boolean inserir(Empresa empresa) {
         String query = "INSERT INTO empresa(nome, descricao, cnpj, email, pais_id, cep, senha, estado_id) VALUES (?,?,?,?,?,?,?,?)"
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, empresa.getNome())
@@ -52,8 +52,10 @@ class EmpresaDAO {
             stmt.setString(7, empresa.getSenha())
             stmt.setInt(8, Integer.parseInt(empresa.getEstado()))
             stmt.execute()
+            return true
         } catch (Exception e) {
             throw new RuntimeException("Erro ao inserir empresa: " + e.getMessage(), e)
+            return false
         }
     }
 
